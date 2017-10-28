@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "dependencies": {
+    "@types/react": "^16.0.18",
+    "gatsby": "^1.9.80",
+    "gatsby-link": "^1.6.23",
+    "gatsby-plugin-typescript": "^1.4.8",
+    "glamor": "^2.20.40",
+    "promise-land": "^0.1.2",
+    "react-material-app": "file:..",
+    "style-definitions": "^0.1.3"
+  }
+}
