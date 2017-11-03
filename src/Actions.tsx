@@ -32,7 +32,7 @@ export type Action = {
 
 export type ActionsProps = {
   actions: Array<Action>
-  color?: PropTypes.Color
+  color?: PropTypes.Color | 'contrast'
   style?: React.CSSProperties
 }
 export type PrivateActionsProps = ActionsProps & {
@@ -75,7 +75,7 @@ export class ActionsView extends React.Component<
   }
 
   render() {
-    const {actions, isMobile, isMouse, style, history} = this.props
+    const {actions, color, isMobile, isMouse, style, history} = this.props
 
     const icons: Array<Action> = []
     const menuItems: Array<Action> = []
@@ -126,7 +126,7 @@ export class ActionsView extends React.Component<
       <ActionRow style={style}>
         {icons.map(
           (item, i) =>
-            item.icon ? (
+            item.icon && !item.label ? (
               <IconButton
                 key={item.label || i}
                 aria-label={item.label}
@@ -134,6 +134,8 @@ export class ActionsView extends React.Component<
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
+                href={item.href}
+                color={color}
               >
                 <Icon children={item.icon} />
               </IconButton>
@@ -144,9 +146,16 @@ export class ActionsView extends React.Component<
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
+                href={item.href}
                 style={{minWidth: 0}}
                 dense={isMouse}
+                color={color}
               >
+                {item.icon && (
+                  <ListItemIcon style={{marginRight: 8}}>
+                    <Icon children={item.icon} />
+                  </ListItemIcon>
+                )}
                 {item.label}
               </Button>
             ),
@@ -158,6 +167,7 @@ export class ActionsView extends React.Component<
             aria-owns={this.state.open ? 'action-menu' : null}
             aria-haspopup="true"
             onClick={this.handleClick}
+            color={color}
           >
             <MoreVertIcon />
           </IconButton>,

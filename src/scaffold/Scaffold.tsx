@@ -14,32 +14,33 @@ import withStyles from 'material-ui/styles/withStyles'
 import React, {ReactNode} from 'react'
 import {withRouter} from 'react-router'
 import {compose} from 'recompose'
-import {column, flex} from 'style-definitions'
+import {column, flex, row} from 'style-definitions'
 import {Action, Actions} from '../Actions'
 import {ScaffoldContext, Section, scaffoldContextType} from './context'
 
 const drawerWidth = 240
-const Container = glamorous.div([column({flex: 1}), {position: 'relative'}])
+const Container = glamorous.div([row({flex: 1}), {position: 'relative'}])
+const ContentContainer = glamorous.div(column({flex: 1}))
 const styles = (theme: Theme) => ({
   appBar: {
-    position: 'static',
-    [theme.breakpoints.up('md')]: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
+    position: 'static' as 'static',
   },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
-      display: 'none',
+      display: 'none' as 'none',
     },
   },
   drawerPaper: {
     width: 250,
+    height: 'calc(100% + 56px)',
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'relative' as 'relative',
       height: '100%',
     },
+  },
+  docked: {
+    position: 'relative' as 'relative',
   },
 })
 
@@ -48,7 +49,7 @@ export type ScaffoldProps = {
   drawer?: ReactNode
 }
 export type PrivateScaffoldProps = ScaffoldProps &
-  StyledComponentProps<'drawerPaper' | 'navIconHide' | 'appBar'> & {
+  StyledComponentProps<'docked' | 'drawerPaper' | 'navIconHide' | 'appBar'> & {
     location: Location
     history: History
   }
@@ -136,49 +137,14 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
 
   render() {
     const {appName, drawer, classes, children} = this.props
-    const {contextActions} = this.state
+    const {contextActions, sections} = this.state
     const activeSection = this.activeSection
+    const showBack = drawer
+      ? activeSection && sections.length > 1
+      : activeSection
 
     return (
       <Container>
-        <AppBar className={classes!.appBar}>
-          <Toolbar>
-            {drawer &&
-              !activeSection && (
-                <IconButton
-                  color="contrast"
-                  aria-label="Open drawer"
-                  onClick={this.handleDrawerToggle}
-                  className={classes!.navIconHide}
-                >
-                  <MenuIcon />
-                </IconButton>
-              )}
-            {activeSection && (
-              <IconButton
-                color="contrast"
-                aria-label="Back"
-                onClick={
-                  activeSection.onBack
-                    ? () => activeSection.onBack!(this.props.history)
-                    : undefined
-                }
-              >
-                <BackIcon />
-              </IconButton>
-            )}
-            <Typography type="title" color="inherit" style={flex(true)}>
-              {activeSection ? activeSection.title : appName}
-            </Typography>
-            {contextActions && (
-              <Actions
-                actions={contextActions}
-                color="inherit"
-                style={{marginRight: -8}}
-              />
-            )}
-          </Toolbar>
-        </AppBar>
         {drawer && [
           <Hidden mdUp key="mobile drawer">
             <Drawer
@@ -190,17 +156,57 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
               {drawer}
             </Drawer>
           </Hidden>,
-          <Hidden mdDown implementation="css" key="desktop drawer">
+          <Hidden mdDown key="desktop drawer">
             <Drawer
               type="permanent"
               open
-              classes={{paper: classes!.drawerPaper}}
+              classes={{docked: classes!.docked, paper: classes!.drawerPaper}}
             >
               {drawer}
             </Drawer>
           </Hidden>,
         ]}
-        {children}
+        <ContentContainer>
+          <AppBar className={classes!.appBar}>
+            <Toolbar>
+              {drawer &&
+                !showBack && (
+                  <IconButton
+                    color="contrast"
+                    aria-label="Open drawer"
+                    onClick={this.handleDrawerToggle}
+                    className={classes!.navIconHide}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                )}
+              {showBack && (
+                <IconButton
+                  color="contrast"
+                  aria-label="Back"
+                  onClick={
+                    activeSection.onBack
+                      ? () => activeSection.onBack!(this.props.history)
+                      : undefined
+                  }
+                >
+                  <BackIcon />
+                </IconButton>
+              )}
+              <Typography type="title" color="inherit" style={flex(true)}>
+                {activeSection ? activeSection.title : appName}
+              </Typography>
+              {contextActions && (
+                <Actions
+                  actions={contextActions}
+                  color="contrast"
+                  style={{marginRight: -8}}
+                />
+              )}
+            </Toolbar>
+          </AppBar>
+          <div style={{flex: 1}}>{children}</div>
+        </ContentContainer>
       </Container>
     )
   }

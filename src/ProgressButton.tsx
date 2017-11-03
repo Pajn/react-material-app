@@ -109,7 +109,11 @@ export class ProgressButton extends React.Component<
         {children}
         {isLoading && (
           <div style={{...fill(), ...center}}>
-            <CircularProgress size={24} {...progressProps} />
+            <CircularProgress
+              size={24}
+              color={props.color === 'accent' ? 'accent' : 'primary'}
+              {...progressProps}
+            />
           </div>
         )}
       </Button>
