@@ -1,4 +1,4 @@
-import {ReactElement} from 'react'
+import React from 'react'
 import {compose, getContext, lifecycle} from 'recompose'
 import {
   ScaffoldContext,
@@ -9,7 +9,7 @@ import {
 export type SectionProps = SectionType
 export type PrivateSectionProps = SectionProps &
   ScaffoldContext & {
-    children: ReactElement<any>
+    children: React.ReactElement<any>
   }
 
 const enhance = compose<PrivateSectionProps, SectionProps>(
@@ -36,6 +36,9 @@ const enhance = compose<PrivateSectionProps, SectionProps>(
   }),
 )
 
-export const SectionView = ({children = null}: PrivateSectionProps) => children
+export const SectionView = ({children = null}: PrivateSectionProps) => children!
 
+/**
+ * Sets the current page in the Appbar
+ */
 export const Section = enhance(SectionView)

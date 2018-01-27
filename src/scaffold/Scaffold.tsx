@@ -212,6 +212,12 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
   }
 }
 
+/**
+ * A component to help you manage the application level
+ * toolbar while still keeping logic cleanly seperated.
+ * It also help with managing the history so that the back
+ * button works as expected.
+ */
 export const Scaffold = enhance(ScaffoldView) as React.ComponentClass<
   ScaffoldProps
 >

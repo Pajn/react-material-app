@@ -1,4 +1,4 @@
-A collection of higher level components usefull in building material design based React applictions.
+A collection of higher level components useful in building material design based React applictions.
 All components can be individually imported so that you only bundle those that you actually need.
 
 ## Components

@@ -1,4 +1,6 @@
 import deepEqual from 'deep-equal'
+// @ts-ignore
+import React from 'react'
 import {compose, getContext, lifecycle} from 'recompose'
 import {Action} from '../Actions'
 import {ScaffoldContext, scaffoldContextType} from './context'
@@ -35,4 +37,8 @@ const enhance = compose<PrivateContextActionsProps, ContextActionsProps>(
 
 export const ContextActionsView = ({}: PrivateContextActionsProps) => null
 
+/**
+ * Sets actions that are avalible in the app bar, for example
+ * save in a form or create new in a list.
+ */
 export const ContextActions = enhance(ContextActionsView)

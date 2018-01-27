@@ -1,5 +1,5 @@
 import {History} from 'history'
-import PropTypes from 'prop-types'
+import PropTypes, {ValidationMap} from 'prop-types'
 import {Action} from '../Actions'
 
 export type Section = {
@@ -20,9 +20,7 @@ export type ScaffoldContext = {
   clearContextActions: () => void
 }
 
-export const scaffoldContextType: {
-  [p in keyof ScaffoldContext]: PropTypes.Validator<ScaffoldContext[p]>
-} = {
+export const scaffoldContextType: ValidationMap<ScaffoldContext> = {
   activeSection: PropTypes.object,
 
   pushSection: PropTypes.func,

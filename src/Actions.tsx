@@ -32,7 +32,7 @@ export type Action = {
 
 export type ActionsProps = {
   actions: Array<Action>
-  color?: PropTypes.Color | 'contrast'
+  color?: PropTypes.Color
   style?: React.CSSProperties
 }
 export type PrivateActionsProps = ActionsProps & {
@@ -70,7 +70,7 @@ export class ActionsView extends React.Component<
     this.setState({open: true, anchorEl: event.currentTarget})
   }
 
-  handleRequestClose = () => {
+  handleClose = () => {
     this.setState({open: false})
   }
 
@@ -164,7 +164,7 @@ export class ActionsView extends React.Component<
           <IconButton
             key="button"
             aria-label="More"
-            aria-owns={this.state.open ? 'action-menu' : null}
+            aria-owns={this.state.open ? 'action-menu' : undefined}
             aria-haspopup="true"
             onClick={this.handleClick}
             color={color}
@@ -175,7 +175,7 @@ export class ActionsView extends React.Component<
             key="menu"
             id="action-menu"
             open={this.state.open}
-            onRequestClose={this.handleRequestClose}
+            onClose={this.handleClose}
             anchorEl={this.state.anchorEl}
           >
             {menuItems.map((item, i) => (
@@ -183,7 +183,7 @@ export class ActionsView extends React.Component<
                 key={item.label || i}
                 dense={isMouse}
                 onClick={e => {
-                  this.handleRequestClose()
+                  this.handleClose()
                   if (item.onClick) return item.onClick(e)
                 }}
                 disabled={item.disabled}
@@ -205,4 +205,10 @@ export class ActionsView extends React.Component<
   }
 }
 
+/**
+ * Display actions in for example a toolbar or a list item.
+ *
+ * Automatically renders them as separate buttons or in a menu
+ * depending on the avalible space.
+ */
 export const Actions = enhance(ActionsView)

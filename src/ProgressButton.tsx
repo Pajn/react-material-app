@@ -37,6 +37,10 @@ export type ProgressButtonProps = Omit<ButtonProps, 'onClick'> & {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => any
 }
 
+/**
+ * Displays an material button that when clicked can display
+ * a progress until an asyncronous action has compleated.
+ */
 export class ProgressButton extends React.Component<
   ProgressButtonProps,
   {isLoading: boolean}
@@ -111,7 +115,7 @@ export class ProgressButton extends React.Component<
           <div style={{...fill(), ...center}}>
             <CircularProgress
               size={24}
-              color={props.color === 'accent' ? 'accent' : 'primary'}
+              color={props.color === 'secondary' ? 'secondary' : 'primary'}
               {...progressProps}
             />
           </div>
