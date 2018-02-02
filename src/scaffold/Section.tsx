@@ -13,7 +13,7 @@ export type PrivateSectionProps = SectionProps &
   }
 
 const enhance = compose<PrivateSectionProps, SectionProps>(
-  getContext(scaffoldContextType),
+  getContext(scaffoldContextType as any),
   lifecycle<PrivateSectionProps, PrivateSectionProps>({
     componentDidMount() {
       const {title, onBack, path, pushSection} = this

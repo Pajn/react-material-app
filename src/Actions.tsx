@@ -9,15 +9,23 @@ import {ListItemIcon} from 'material-ui/List'
 import Menu, {MenuItem} from 'material-ui/Menu'
 import React, {ReactNode} from 'react'
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom'
 import {withMedia} from 'react-with-media'
 import {compose} from 'recompose'
 import {row} from 'style-definitions'
+
+declare module 'material-ui/ButtonBase/ButtonBase' {
+  interface ButtonBaseProps {
+    to?: string
+  }
+}
 
 export type Placement = 'menu' | 'toolbar' | 'auto'
 
 export type Action = {
   disabled?: boolean
   label?: string
+  to?: string
   href?: string
   icon?: ReactNode
   onClick?: (e?: React.MouseEvent<HTMLElement>) => void
@@ -39,9 +47,9 @@ export type PrivateActionsProps = ActionsProps & {
   isMobile: boolean
   isMouse: boolean
 } & {
-    location: Location
-    history: History
-  }
+  location: Location
+  history: History
+}
 
 const ActionRow = glamorous.div(
   row({horizontal: 'flex-end', vertical: 'center'}),
@@ -110,14 +118,18 @@ export class ActionsView extends React.Component<
 
     {
       let action: Action
-      while ((action = auto.shift()!) !== undefined) {
-        if (
-          !isMobile &&
-          (icons.length < 2 || (auto.length === 1 && icons.length === 2))
-        ) {
-          icons.push(action)
-        } else {
-          menuItems.unshift(action)
+      if (isMobile && icons.length === 0 && auto.length === 1) {
+        icons.push(auto.shift()!)
+      } else {
+        while ((action = auto.shift()!) !== undefined) {
+          if (
+            !isMobile &&
+            (icons.length < 2 || (auto.length === 1 && icons.length === 2))
+          ) {
+            icons.push(action)
+          } else {
+            menuItems.unshift(action)
+          }
         }
       }
     }
@@ -129,12 +141,14 @@ export class ActionsView extends React.Component<
             item.icon && !item.label ? (
               <IconButton
                 key={item.label || i}
+                component={item.to ? (Link as any) : undefined}
                 aria-label={item.label}
                 onClick={item.onClick}
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
                 href={item.href}
+                to={item.to}
                 color={color}
               >
                 <Icon children={item.icon} />
@@ -142,14 +156,16 @@ export class ActionsView extends React.Component<
             ) : (
               <Button
                 key={item.label || i}
+                component={item.to ? (Link as any) : undefined}
                 onClick={item.onClick}
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
                 href={item.href}
+                to={item.to}
                 style={{minWidth: 0}}
-                dense={isMouse}
                 color={color}
+                size={isMouse ? 'small' : 'medium'}
               >
                 {item.icon && (
                   <ListItemIcon style={{marginRight: 8}}>
@@ -177,10 +193,19 @@ export class ActionsView extends React.Component<
             open={this.state.open}
             onClose={this.handleClose}
             anchorEl={this.state.anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
           >
             {menuItems.map((item, i) => (
               <MenuItem
                 key={item.label || i}
+                component={item.to ? (Link as any) : undefined}
                 dense={isMouse}
                 onClick={e => {
                   this.handleClose()
@@ -189,6 +214,8 @@ export class ActionsView extends React.Component<
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
+                to={item.to}
+                href={item.href}
               >
                 {item.icon && (
                   <ListItemIcon>

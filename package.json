@@ -2,23 +2,24 @@
   "name": "react-material-app",
   "description": "High level material design React components",
   "homepage": "https://pajn.github.io/react-material-app/",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
   "dependencies": {
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.0.35",
-    "@types/recompose": "^0.24.4",
+    "@types/react": "^16.0.38",
+    "@types/react-dom": "^16.0.4",
+    "@types/recompose": "^0.24.5",
     "@types/webpack": "^3.0.13",
     "glamorous": "^4.11.4",
     "history": "^4.7.2",
     "material-definitions": "^0.3.3",
-    "material-ui": "^1.0.0-beta.30",
+    "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-beta.17",
     "react-router": "^4.2.0",
     "react-toolbox": "^2.0.0-beta.12",
     "react-with-media": "^0.3.0",
     "recompose": "^0.26.0",
-    "style-definitions": "^0.1.3"
+    "style-definitions": "^0.1.3",
+    "typescript": "^2.8.0-dev.20180217"
   },
   "devDependencies": {
     "@types/jest": "^21.1.3",
@@ -34,8 +35,9 @@
     "tslint-config-pajn": "^1.0.0"
   },
   "resolutions": {
-    "@types/react": "16.0.18",
-    "@types/recompose": "0.24.2"
+    "@types/react": "16.0.38",
+    "@types/react-dom": "16.0.4",
+    "@types/recompose": "0.24.5"
   },
   "tscomp": {
     "mode": "lib"
@@ -47,8 +49,7 @@
     "watch": "tscomp watch",
     "prepack": "tscomp build",
     "lint": "tslint",
-    "format":
-      "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
+    "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
     "docs": "yarn docs-analyze && documittu build",
     "docs-dev": "documittu start",
     "docs-analyze": "documittu-analyzer-ts . > docs/analyze-result.json"

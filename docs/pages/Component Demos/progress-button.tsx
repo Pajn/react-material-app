@@ -39,7 +39,7 @@ export default () => (
         <ProgressButton onClick={() => timeout(1000)}>Load</ProgressButton>
       </ButtonExample>
       <ButtonExample title="raised">
-        <ProgressButton raised onClick={() => timeout(1000)}>
+        <ProgressButton variant="raised" onClick={() => timeout(1000)}>
           Load
         </ProgressButton>
       </ButtonExample>
@@ -49,7 +49,11 @@ export default () => (
         </ProgressButton>
       </ButtonExample>
       <ButtonExample title="primary raised">
-        <ProgressButton raised color="primary" onClick={() => timeout(1000)}>
+        <ProgressButton
+          variant="raised"
+          color="primary"
+          onClick={() => timeout(1000)}
+        >
           Load
         </ProgressButton>
       </ButtonExample>
@@ -59,7 +63,11 @@ export default () => (
         </ProgressButton>
       </ButtonExample>
       <ButtonExample title="secondary raised">
-        <ProgressButton raised color="secondary" onClick={() => timeout(1000)}>
+        <ProgressButton
+          variant="raised"
+          color="secondary"
+          onClick={() => timeout(1000)}
+        >
           Load
         </ProgressButton>
       </ButtonExample>

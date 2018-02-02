@@ -148,9 +148,9 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
         {drawer && [
           <Hidden mdUp key="mobile drawer">
             <Drawer
-              type="temporary"
+              variant="temporary"
               open={this.state.drawerOpen}
-              onRequestClose={this.handleDrawerToggle}
+              onClose={this.handleDrawerToggle}
               classes={{paper: classes!.drawerPaper}}
             >
               {drawer}
@@ -158,7 +158,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
           </Hidden>,
           <Hidden mdDown key="desktop drawer">
             <Drawer
-              type="permanent"
+              variant="permanent"
               open
               classes={{docked: classes!.docked, paper: classes!.drawerPaper}}
             >
@@ -172,8 +172,8 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
               {drawer &&
                 !showBack && (
                   <IconButton
-                    color="contrast"
                     aria-label="Open drawer"
+                    color="inherit"
                     onClick={this.handleDrawerToggle}
                     className={classes!.navIconHide}
                   >
@@ -182,8 +182,8 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
                 )}
               {showBack && (
                 <IconButton
-                  color="contrast"
                   aria-label="Back"
+                  color="inherit"
                   onClick={
                     activeSection.onBack
                       ? () => activeSection.onBack!(this.props.history)
@@ -193,13 +193,13 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
                   <BackIcon />
                 </IconButton>
               )}
-              <Typography type="title" color="inherit" style={flex(true)}>
+              <Typography variant="title" color="inherit" style={flex(true)}>
                 {activeSection ? activeSection.title : appName}
               </Typography>
               {contextActions && (
                 <Actions
                   actions={contextActions}
-                  color="contrast"
+                  color="inherit"
                   style={{marginRight: -8}}
                 />
               )}

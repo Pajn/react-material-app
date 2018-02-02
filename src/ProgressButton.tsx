@@ -99,7 +99,7 @@ export class ProgressButton extends React.Component<
       style,
       disabled,
       progressProps,
-      ...props,
+      ...props
     } = this.props
     const {isLoading} = this.state
 

@@ -12,7 +12,7 @@ export type PrivateContextActionsProps = ContextActionsProps &
   ScaffoldContext & {}
 
 const enhance = compose<PrivateContextActionsProps, ContextActionsProps>(
-  getContext(scaffoldContextType),
+  getContext<ScaffoldContext>(scaffoldContextType),
   lifecycle<PrivateContextActionsProps, PrivateContextActionsProps>({
     componentDidMount() {
       const {contextActions, setContextActions} = this
