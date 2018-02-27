@@ -85,16 +85,17 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
     this.setState({})
   }
   popSection = (title?: string) => {
-    const index = title
-      ? this.state.sections.findIndex(section => section.title === title)
-      : 0
-    if (index >= 0) {
+    if (
+      title === undefined ||
+      (this.state.sections[0] && this.state.sections[0].title === title)
+    ) {
       // Set state synchronously to not drop multiple changes in the same render
-      this.state.sections = [
-        ...(index > 0 ? this.state.sections.slice(0, index) : []),
-        ...this.state.sections.slice(index + 1),
-      ]
+      const [poppedSection, ...keptSections] = this.state.sections
+      this.state.sections = keptSections
       this.setState({})
+      if (poppedSection.onUnload) {
+        poppedSection.onUnload()
+      }
     }
   }
   replaceSection = (newSection: Section, oldTitle?: string) => {
@@ -103,6 +104,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
       : 0
 
     if (index >= 0) {
+      const replacedSections = this.state.sections[index]
       this.setState({
         sections: [
           ...this.state.sections.slice(0, index),
@@ -110,6 +112,9 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
           ...this.state.sections.slice(index + 1),
         ],
       })
+      if (replacedSections.onUnload) {
+        replacedSections.onUnload()
+      }
     }
   }
 

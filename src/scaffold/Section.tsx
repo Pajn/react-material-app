@@ -1,5 +1,6 @@
 import React from 'react'
-import {compose, getContext, lifecycle} from 'recompose'
+import {matchPath} from 'react-router'
+import {compose, getContext, lifecycle, withHandlers} from 'recompose'
 import {
   ScaffoldContext,
   Section as SectionType,
@@ -10,15 +11,36 @@ export type SectionProps = SectionType
 export type PrivateSectionProps = SectionProps &
   ScaffoldContext & {
     children: React.ReactElement<any>
+    popstateListener: () => void
   }
 
 const enhance = compose<PrivateSectionProps, SectionProps>(
   getContext(scaffoldContextType as any),
+  withHandlers({
+    popstateListener: ({
+      path,
+      popSection,
+      title,
+    }: PrivateSectionProps) => () => {
+      if (!matchPath(window.location.pathname, {path})) {
+        popSection(title)
+      }
+    },
+  }),
   lifecycle<PrivateSectionProps, PrivateSectionProps>({
     componentDidMount() {
-      const {title, onBack, path, pushSection} = this
-        .props as PrivateSectionProps
-      pushSection({title, onBack, path})
+      const {
+        title,
+        path,
+        onBack,
+        onUnload,
+        pushSection,
+        popstateListener,
+      } = this.props as PrivateSectionProps
+      pushSection({title, path, onBack, onUnload})
+      if (path) {
+        window.addEventListener('popstate', popstateListener, true)
+      }
     },
     componentWillReceiveProps(nextProps: PrivateSectionProps) {
       const {title, onBack, path} = nextProps as PrivateSectionProps
@@ -27,10 +49,11 @@ const enhance = compose<PrivateSectionProps, SectionProps>(
       }
     },
     componentWillUnmount() {
-      const {title, popSection, onUnload} = this.props as PrivateSectionProps
+      const {title, path, popSection, popstateListener} = this
+        .props as PrivateSectionProps
       popSection(title)
-      if (onUnload) {
-        onUnload()
+      if (path) {
+        window.removeEventListener('popstate', popstateListener, true)
       }
     },
   }),
