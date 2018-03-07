@@ -4,7 +4,9 @@ import {timeout} from 'promise-land'
 import * as React from 'react'
 import {ReactChild} from 'react'
 import {column, row} from 'style-definitions'
-import {ProgressButton} from '../../../lib'
+import {ProgressButton, Switch} from '../../../lib'
+import {Example} from '../../components/Example'
+import {State} from '../../components/State'
 
 export const attributes = {
   title: 'ProgressButton',
@@ -71,6 +73,20 @@ export default () => (
           Load
         </ProgressButton>
       </ButtonExample>
+    </div>
+    <div style={row()}>
+      <Example title="Externally controlled">
+        <State initialState={false}>
+          {(loading, setLoading) => (
+            <div>
+              <div>
+                <Switch value={loading} onChange={setLoading} label="Loading" />
+              </div>
+              <ProgressButton loading={loading}>Load</ProgressButton>
+            </div>
+          )}
+        </State>
+      </Example>
     </div>
   </div>
 )

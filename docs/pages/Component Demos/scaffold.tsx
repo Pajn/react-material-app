@@ -5,7 +5,7 @@ import StarIcon from 'material-ui-icons/Star'
 import {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
 import * as React from 'react'
 import {Scaffold, Section} from '../../../lib'
-import {Example} from '../../components/Example'
+import {ExampleHeader} from '../../components/Example'
 
 export const attributes = {
   title: 'Scaffold',
@@ -27,29 +27,38 @@ export default class extends React.Component<{}, {page?: string}> {
   render() {
     return (
       <div style={{position: 'relative'}}>
-        <Example>Basic</Example>
+        <ExampleHeader>Basic</ExampleHeader>
         <Scaffold appName="Basic">
           <Content />
         </Scaffold>
 
-        <Example>Drawer</Example>
+        <ExampleHeader>Drawer</ExampleHeader>
         <Scaffold
           appName="Drawer"
           drawer={
             <div>
-              <ListItem button onClick={() => this.setState({page: 'Inbox'})}>
+              <ListItem
+                dense
+                button
+                onClick={() => this.setState({page: 'Inbox'})}
+              >
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
                 <ListItemText primary="Inbox" />
               </ListItem>
-              <ListItem button onClick={() => this.setState({page: 'Starred'})}>
+              <ListItem
+                dense
+                button
+                onClick={() => this.setState({page: 'Starred'})}
+              >
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
                 <ListItemText primary="Starred" />
               </ListItem>
               <ListItem
+                dense
                 button
                 onClick={() => this.setState({page: 'Send Mail'})}
               >
@@ -58,7 +67,11 @@ export default class extends React.Component<{}, {page?: string}> {
                 </ListItemIcon>
                 <ListItemText primary="Send mail" />
               </ListItem>
-              <ListItem button onClick={() => this.setState({page: 'Drafts'})}>
+              <ListItem
+                dense
+                button
+                onClick={() => this.setState({page: 'Drafts'})}
+              >
                 <ListItemIcon>
                   <DraftsIcon />
                 </ListItemIcon>
