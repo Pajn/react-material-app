@@ -1,5 +1,8 @@
 import Button, {ButtonProps} from 'material-ui/Button'
-import {CircularProgress, CircularProgressProps} from 'material-ui/Progress'
+import CircularProgress, {
+  CircularProgressProps,
+} from 'material-ui/Progress/CircularProgress'
+import Grow from 'material-ui/transitions/Grow'
 import React from 'react'
 import {center, fill} from 'style-definitions'
 import {Omit} from './types'
@@ -30,11 +33,65 @@ function makeCancelable<T>(
     },
   }
 }
+export type DelayedCircularProgressProps = CircularProgressProps & {
+  timeout?: number
+  open: boolean
+}
+
+/**
+ * CircularProgress from material-ui but with a timeout to avoid it beeing display immediately
+ */
+export class DelayedCircularProgress extends React.Component<
+  DelayedCircularProgressProps,
+  {spin: boolean}
+> {
+  cancel?: () => void
+  timeout: any
+  state = {spin: false}
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.open && nextProps.open) {
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
+      this.timeout = setTimeout(() => {
+        this.setState({spin: true})
+        this.timeout = undefined
+      }, this.props.timeout || 100)
+    } else if (this.props.open && !nextProps.open) {
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
+      this.setState({spin: false})
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+  }
+
+  render() {
+    const {spin} = this.state
+
+    return (
+      <Grow in={spin}>
+        <CircularProgress {...this.props} />
+      </Grow>
+    )
+  }
+}
+
 export type ProgressButtonProps = Omit<ButtonProps, 'onClick'> & {
   loading?: boolean
   timeout?: number
   progressProps?: CircularProgressProps
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => any
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => any
+  /**
+   * @default true
+   */
+  disableOnProgress?: boolean
 }
 
 /**
@@ -47,7 +104,6 @@ export class ProgressButton extends React.Component<
 > {
   cancel?: () => void
   state = {isLoading: false}
-  timeout: any
 
   onClick = (e: any): any => {
     if (!this.props.onClick) return
@@ -59,29 +115,18 @@ export class ProgressButton extends React.Component<
       }
       const {promise, cancel} = makeCancelable(val)
       this.cancel = cancel
-      if (this.timeout) {
-        clearTimeout(this.timeout)
-      }
-      this.timeout = setTimeout(() => {
-        this.setState({isLoading: true})
-        this.timeout = undefined
-      }, this.props.timeout || 100)
-      return promise
-        .then(() => {
-          if (this.timeout) {
-            clearTimeout(this.timeout)
-          }
+      this.setState({isLoading: true})
+      return promise.then(
+        () => {
           this.cancel = undefined
           this.setState({isLoading: false})
-        })
-        .catch((e: any) => {
-          if (this.timeout) {
-            clearTimeout(this.timeout)
-          }
+        },
+        (e: any) => {
           this.cancel = undefined
           this.setState({isLoading: false})
           throw e
-        })
+        },
+      )
     } else return val
   }
 
@@ -99,27 +144,28 @@ export class ProgressButton extends React.Component<
       style,
       disabled,
       progressProps,
+      disableOnProgress = true,
       ...props
     } = this.props
     const {isLoading} = this.state
+    const spin = loading || isLoading
 
     return (
       <Button
         {...props}
         onClick={onClick ? this.onClick : undefined}
-        disabled={isLoading || disabled}
+        disabled={disabled || (disableOnProgress && spin)}
         style={{position: 'relative', ...style}}
       >
         {children}
-        {isLoading && (
-          <div style={{...fill(), ...center}}>
-            <CircularProgress
-              size={24}
-              color={props.color === 'secondary' ? 'secondary' : 'primary'}
-              {...progressProps}
-            />
-          </div>
-        )}
+        <div style={{...fill(), ...center, touchAction: 'none'}}>
+          <DelayedCircularProgress
+            open={spin}
+            size={24}
+            color={props.color === 'secondary' ? 'secondary' : 'primary'}
+            {...progressProps}
+          />
+        </div>
       </Button>
     )
   }
