@@ -15,7 +15,7 @@ export type SwitchProps = Omit<
   }
 
 export const Switch = ({
-  value,
+  value = false,
   onChange,
   label,
   error,

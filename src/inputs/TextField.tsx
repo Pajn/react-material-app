@@ -20,6 +20,7 @@ export type TextFieldProps = Omit<
   }
 
 export const TextField = ({
+  value = '',
   onChange,
   label,
   error,
@@ -49,6 +50,7 @@ export const TextField = ({
       {...props}
       id={id}
       label={label}
+      value={value}
       onChange={onChange && (event => onChange(event.target.value))}
       disabled={disabled}
       InputProps={{

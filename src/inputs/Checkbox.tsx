@@ -17,7 +17,7 @@ export type CheckboxProps = Omit<
   }
 
 export const Checkbox = ({
-  value,
+  value = false,
   onChange,
   label,
   error,

@@ -45,7 +45,7 @@ export const Select = ({
     onFocus={onFocus}
   >
     {label && (
-      <InputLabel htmlFor={id} error={false}>
+      <InputLabel htmlFor={id} error={false} required={false}>
         {label}
       </InputLabel>
     )}
