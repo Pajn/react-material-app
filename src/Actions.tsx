@@ -7,12 +7,14 @@ import Icon from 'material-ui/Icon'
 import IconButton from 'material-ui/IconButton'
 import {ListItemIcon} from 'material-ui/List'
 import Menu, {MenuItem} from 'material-ui/Menu'
-import React, {ReactNode} from 'react'
+import Tooltip, {TooltipProps} from 'material-ui/Tooltip'
+import React, {ReactElement, ReactNode} from 'react'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {withMedia} from 'react-with-media'
 import {compose} from 'recompose'
 import {row} from 'style-definitions'
+import {Omit} from './types'
 
 declare module 'material-ui/ButtonBase/ButtonBase' {
   interface ButtonBaseProps {
@@ -25,6 +27,8 @@ export type Placement = 'menu' | 'toolbar' | 'auto'
 export type Action = {
   disabled?: boolean
   label?: string
+  ariaLabel?: string
+  tooltip?: string | Omit<TooltipProps, 'children'>
   to?: string
   href?: string
   icon?: ReactNode
@@ -42,6 +46,7 @@ export type ActionsProps = {
   actions: Array<Action>
   color?: PropTypes.Color
   style?: React.CSSProperties
+  tooltipPlacement?: TooltipProps['placement']
 }
 export type PrivateActionsProps = ActionsProps & {
   isMobile: boolean
@@ -54,6 +59,23 @@ export type PrivateActionsProps = ActionsProps & {
 const ActionRow = glamorous.div(
   row({horizontal: 'flex-end', vertical: 'center'}),
 )
+
+const wrapWithTooltip = (
+  tooltip: Omit<TooltipProps, 'children'> | string | undefined,
+  tooltipPlacement,
+  children: ReactElement<any>,
+) =>
+  tooltip === undefined ? (
+    children
+  ) : typeof tooltip === 'string' ? (
+    <Tooltip key={children.key!} title={tooltip} placement={tooltipPlacement}>
+      {children}
+    </Tooltip>
+  ) : (
+    <Tooltip key={children.key!} placement={tooltipPlacement} {...tooltip}>
+      {children}
+    </Tooltip>
+  )
 
 const enhance = compose<PrivateActionsProps, ActionsProps>(
   withRouter,
@@ -83,7 +105,15 @@ export class ActionsView extends React.Component<
   }
 
   render() {
-    const {actions, color, isMobile, isMouse, style, history} = this.props
+    const {
+      actions,
+      color,
+      tooltipPlacement,
+      isMobile,
+      isMouse,
+      style,
+      history,
+    } = this.props
 
     const icons: Array<Action> = []
     const menuItems: Array<Action> = []
@@ -139,20 +169,24 @@ export class ActionsView extends React.Component<
         {icons.map(
           (item, i) =>
             item.icon && !item.label ? (
-              <IconButton
-                key={item.label || i}
-                component={item.to ? (Link as any) : undefined}
-                aria-label={item.label}
-                onClick={item.onClick}
-                disabled={item.disabled}
-                type={item.type}
-                form={item.form}
-                href={item.href}
-                to={item.to}
-                color={color}
-              >
-                <Icon children={item.icon} />
-              </IconButton>
+              wrapWithTooltip(
+                item.tooltip,
+                tooltipPlacement,
+                <IconButton
+                  key={item.label || i}
+                  component={item.to ? (Link as any) : undefined}
+                  aria-label={item.ariaLabel}
+                  onClick={item.onClick}
+                  disabled={item.disabled}
+                  type={item.type}
+                  form={item.form}
+                  href={item.href}
+                  to={item.to}
+                  color={color}
+                >
+                  <Icon children={item.icon} />
+                </IconButton>,
+              )
             ) : (
               <Button
                 key={item.label || i}
@@ -166,6 +200,7 @@ export class ActionsView extends React.Component<
                 style={{minWidth: 0}}
                 color={color}
                 size={isMouse ? 'small' : 'medium'}
+                aria-label={item.ariaLabel}
               >
                 {item.icon && (
                   <ListItemIcon style={{marginRight: 8}}>
@@ -205,6 +240,7 @@ export class ActionsView extends React.Component<
             {menuItems.map((item, i) => (
               <MenuItem
                 key={item.label || i}
+                aria-label={item.ariaLabel}
                 component={item.to ? (Link as any) : undefined}
                 dense={isMouse}
                 onClick={e => {
