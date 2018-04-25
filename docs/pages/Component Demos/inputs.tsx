@@ -26,43 +26,72 @@ export default () => (
     </p>
 
     <Example title="Checkbox">
-      <InputExample slim>
-        <Checkbox />
-      </InputExample>
-      <InputExample slim>
-        <Checkbox label="Remember me" />
-      </InputExample>
+      <State>
+        {(value: boolean, setValue) => (
+          <>
+            <InputExample slim>
+              <Checkbox value={value} onChange={setValue} />
+            </InputExample>
+            <InputExample slim>
+              <Checkbox value={value} onChange={setValue} label="Remember me" />
+            </InputExample>
+          </>
+        )}
+      </State>
     </Example>
     <Example title="Switch">
-      <InputExample slim>
-        <Switch />
-      </InputExample>
-      <InputExample slim>
-        <Switch label="Remember me" />
-      </InputExample>
+      <State>
+        {(value: boolean, setValue) => (
+          <>
+            <InputExample slim>
+              <Switch value={value} onChange={setValue} />
+            </InputExample>
+            <InputExample slim>
+              <Switch value={value} onChange={setValue} label="Remember me" />
+            </InputExample>
+          </>
+        )}
+      </State>
     </Example>
     <Example title="TextField">
-      <InputExample>
-        <TextField />
-      </InputExample>
-      <InputExample>
-        <TextField label="Username" />
-      </InputExample>
-      <InputExample>
-        <TextField
-          label="Display Name"
-          description="The name shown to other people"
-        />
-      </InputExample>
-      <InputExample>
-        <TextField label="Email" error="A valid email is required" />
-      </InputExample>
-      <InputExample>
-        <TextField startAdornment="$" />
-      </InputExample>
-      <InputExample>
-        <TextField endAdornment="km/h" />
-      </InputExample>
+      <State>
+        {(value: string, setValue) => (
+          <>
+            <InputExample>
+              <TextField value={value} onChange={setValue} />
+            </InputExample>
+            <InputExample>
+              <TextField value={value} onChange={setValue} label="Username" />
+            </InputExample>
+            <InputExample>
+              <TextField
+                value={value}
+                onChange={setValue}
+                label="Display Name"
+                description="The name shown to other people"
+              />
+            </InputExample>
+            <InputExample>
+              <TextField
+                value={value}
+                onChange={setValue}
+                label="Email"
+                error="A valid email is required"
+              />
+            </InputExample>
+            <InputExample>
+              <TextField value={value} onChange={setValue} startAdornment="$" />
+            </InputExample>
+            <InputExample>
+              <TextField
+                value={value}
+                onChange={setValue}
+                endAdornment="km/h"
+              />
+            </InputExample>
+          </>
+        )}
+      </State>
     </Example>
     <Example title="Select">
       <InputExample>
@@ -120,7 +149,7 @@ export default () => (
               value={value}
               onChange={setValue}
               label="Color"
-              error="A value must be selected"
+              error={value ? undefined : 'A value must be selected'}
               choices={[
                 {value: 'red', label: 'Red'},
                 {value: 'green', label: 'Green'},

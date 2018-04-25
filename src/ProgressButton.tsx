@@ -41,7 +41,7 @@ export type DelayedCircularProgressProps = CircularProgressProps & {
 /**
  * CircularProgress from material-ui but with a timeout to avoid it beeing display immediately
  */
-export class DelayedCircularProgress extends React.Component<
+export class DelayedCircularProgress extends React.PureComponent<
   DelayedCircularProgressProps,
   {spin: boolean}
 > {
@@ -98,7 +98,7 @@ export type ProgressButtonProps = Omit<ButtonProps, 'onClick'> & {
  * Displays an material button that when clicked can display
  * a progress until an asyncronous action has compleated.
  */
-export class ProgressButton extends React.Component<
+export class ProgressButton extends React.PureComponent<
   ProgressButtonProps,
   {isLoading: boolean}
 > {

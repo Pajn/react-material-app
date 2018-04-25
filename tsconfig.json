@@ -4,12 +4,7 @@
     "declaration": true,
     "target": "es2015",
     "module": "es2015",
-    "lib": [
-      "dom",
-      "es5",
-      "es2015",
-      "es2016"
-    ],
+    "lib": ["dom", "es5", "es2015", "es2016"],
     "jsx": "react",
     "moduleResolution": "node",
     "noUnusedLocals": true,
@@ -17,14 +12,9 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
-    "rootDir": ".",
+    "rootDir": "src",
     "outDir": "lib"
   },
-  "include": [
-    "src/**/*",
-    "typings/**/*"
-  ],
-  "exclude": [
-    "node_modules/**/*"
-  ]
+  "include": ["src/**/*", "typings/**/*"],
+  "exclude": ["node_modules/**/*"]
 }
