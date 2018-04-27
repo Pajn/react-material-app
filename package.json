@@ -2,7 +2,7 @@
   "name": "react-material-app",
   "description": "High level material design React components",
   "homepage": "https://pajn.github.io/react-material-app/",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "dependencies": {
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.3.13",
@@ -51,8 +51,7 @@
     "watch": "tscomp watch",
     "prepack": "tscomp build",
     "lint": "tslint",
-    "format":
-      "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
+    "format": "prettier --write --single-quote --trailing-comma all --no-bracket-spacing --no-semi src/**/*.{js,jsx,ts,tsx}",
     "docs": "yarn docs-analyze && documittu build",
     "docs-dev": "documittu start",
     "docs-analyze": "documittu-analyzer-ts . > docs/analyze-result.json"
