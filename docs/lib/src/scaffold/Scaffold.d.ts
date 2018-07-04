@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { History, Location } from 'history';
-import { StyledComponentProps } from 'material-ui';
+import { StyledComponentProps } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 import { Action } from '../Actions';
 import { ScaffoldContext, Section } from './context';

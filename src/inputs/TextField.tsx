@@ -1,7 +1,8 @@
-import {InputAdornment, InputProps} from 'material-ui/Input'
+import {InputProps} from '@material-ui/core/Input'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import MUITextField, {
   TextFieldProps as MUITextFieldProps,
-} from 'material-ui/TextField'
+} from '@material-ui/core/TextField'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'

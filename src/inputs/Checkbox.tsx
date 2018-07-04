@@ -1,6 +1,6 @@
 import MUICheckbox, {
   CheckboxProps as MUICheckboxProps,
-} from 'material-ui/Checkbox'
+} from '@material-ui/core/Checkbox'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'

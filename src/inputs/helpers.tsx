@@ -1,9 +1,6 @@
-import {
-  FormControl,
-  FormControlLabel,
-  FormControlProps,
-  FormHelperText,
-} from 'material-ui/Form'
+import FormControl, {FormControlProps} from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import React, {ReactElement, ReactNode} from 'react'
 import {Omit} from '../types'
 

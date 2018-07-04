@@ -1,4 +1,4 @@
-import MUISwitch, {SwitchProps as MUISwitchProps} from 'material-ui/Switch'
+import MUISwitch, {SwitchProps as MUISwitchProps} from '@material-ui/core/Switch'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'

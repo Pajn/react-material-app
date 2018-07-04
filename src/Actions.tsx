@@ -1,13 +1,14 @@
+import {PropTypes} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Tooltip, {TooltipProps} from '@material-ui/core/Tooltip'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 import glamorous from 'glamorous'
 import {History, Location} from 'history'
-import {PropTypes} from 'material-ui'
-import MoreVertIcon from 'material-ui-icons/MoreVert'
-import Button from 'material-ui/Button'
-import Icon from 'material-ui/Icon'
-import IconButton from 'material-ui/IconButton'
-import {ListItemIcon} from 'material-ui/List'
-import Menu, {MenuItem} from 'material-ui/Menu'
-import Tooltip, {TooltipProps} from 'material-ui/Tooltip'
 import React, {ReactElement, ReactNode} from 'react'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
@@ -16,7 +17,7 @@ import {compose} from 'recompose'
 import {row} from 'style-definitions'
 import {Omit} from './types'
 
-declare module 'material-ui/ButtonBase/ButtonBase' {
+declare module '@material-ui/core/ButtonBase/ButtonBase' {
   interface ButtonBaseProps {
     to?: string
   }

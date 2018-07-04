@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { ButtonProps } from 'material-ui/Button';
-import { CircularProgressProps } from 'material-ui/Progress';
+import { ButtonProps } from '@material-ui/core/Button';
+import { CircularProgressProps } from '@material-ui/core/CircularProgress';
 import React from 'react';
 import { Omit } from './types';
 export declare type ProgressButtonProps = Omit<ButtonProps, 'onClick'> & {

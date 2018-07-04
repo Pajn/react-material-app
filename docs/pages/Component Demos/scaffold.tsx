@@ -1,8 +1,10 @@
-import DraftsIcon from 'material-ui-icons/Drafts'
-import InboxIcon from 'material-ui-icons/MoveToInbox'
-import SendIcon from 'material-ui-icons/Send'
-import StarIcon from 'material-ui-icons/Star'
-import {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import DraftsIcon from '@material-ui/icons/Drafts'
+import InboxIcon from '@material-ui/icons/MoveToInbox'
+import SendIcon from '@material-ui/icons/Send'
+import StarIcon from '@material-ui/icons/Star'
 import * as React from 'react'
 import {Scaffold, Section} from '../../../lib'
 import {ExampleHeader} from '../../components/Example'
@@ -11,7 +13,7 @@ export const attributes = {
   title: 'Scaffold',
 }
 
-declare module 'material-ui/List' {
+declare module '@material-ui/core/ListItem' {
   export interface ListItemProps {
     to?: string
   }

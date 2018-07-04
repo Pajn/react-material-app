@@ -1,8 +1,8 @@
-import Button, {ButtonProps} from 'material-ui/Button'
+import Button, {ButtonProps} from '@material-ui/core/Button'
 import CircularProgress, {
   CircularProgressProps,
-} from 'material-ui/Progress/CircularProgress'
-import Grow from 'material-ui/transitions/Grow'
+} from '@material-ui/core/CircularProgress'
+import Grow from '@material-ui/core/Grow'
 import React from 'react'
 import {center, fill} from 'style-definitions'
 import {Omit} from './types'
@@ -158,7 +158,7 @@ export class ProgressButton extends React.PureComponent<
         style={{position: 'relative', ...style}}
       >
         {children}
-        <div style={{...fill(), ...center, touchAction: 'none'}}>
+        <div style={{...(fill() as any), ...center, touchAction: 'none'}}>
           <DelayedCircularProgress
             open={spin}
             size={24}
