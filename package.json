@@ -11,6 +11,7 @@
     "@types/react-dom": "^16.0.4",
     "@types/recompose": "^0.26.1",
     "@types/webpack-env": "^1.13.6",
+    "deep-equal": "^1.0.1",
     "glamorous": "^4.11.4",
     "history": "^4.7.2",
     "material-definitions": "^0.3.3",
@@ -34,7 +35,13 @@
     "tscomp": "0.15.3",
     "tslint": "^5.9.1",
     "tslint-config-pajn": "^1.0.0",
-    "typescript": "^2.8.0-dev.20180217"
+    "typescript": "^2.9.2"
+  },
+  "peerDependencies": {
+    "glamor": "^2.20.40",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "resolutions": {
     "@types/react": "16.4.6",
