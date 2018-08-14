@@ -2,7 +2,9 @@ import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
-import MUISelect, {SelectProps as MUISelectProps} from '@material-ui/core/Select'
+import MUISelect, {
+  SelectProps as MUISelectProps,
+} from '@material-ui/core/Select'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'
@@ -17,6 +19,7 @@ export type SelectProps = Omit<MUISelectProps, 'value' | 'onChange' | 'error'> &
     label?: ReactNode
     id?: string
     choices: Array<Choice>
+    containerProps?: FormFieldProps
   }
 
 export const Select = pure(
@@ -36,6 +39,7 @@ export const Select = pure(
     onBlur,
     onFocus,
     choices,
+    containerProps,
     ...props
   }: SelectProps) => (
     <FormField
@@ -47,6 +51,7 @@ export const Select = pure(
       margin={margin}
       onBlur={onBlur}
       onFocus={onFocus}
+      {...containerProps}
     >
       {label && (
         <InputLabel htmlFor={id} error={false} required={false}>

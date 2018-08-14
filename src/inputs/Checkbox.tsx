@@ -15,6 +15,7 @@ export type CheckboxProps = Omit<
     onChange?: (value: boolean) => void
     label?: ReactNode
     id?: string
+    containerProps?: FormFieldProps
   }
 
 export const Checkbox = pure(
@@ -30,6 +31,7 @@ export const Checkbox = pure(
     margin,
     onBlur,
     onFocus,
+    containerProps,
     ...props
   }: CheckboxProps) => (
     <FormField
@@ -41,6 +43,7 @@ export const Checkbox = pure(
       margin={margin}
       onBlur={onBlur}
       onFocus={onFocus}
+      {...containerProps}
     >
       {wrapWithLabel(
         label,

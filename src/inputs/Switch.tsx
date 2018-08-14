@@ -1,4 +1,6 @@
-import MUISwitch, {SwitchProps as MUISwitchProps} from '@material-ui/core/Switch'
+import MUISwitch, {
+  SwitchProps as MUISwitchProps,
+} from '@material-ui/core/Switch'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'
@@ -13,6 +15,7 @@ export type SwitchProps = Omit<
     onChange?: (value: boolean) => void
     label?: ReactNode
     id?: string
+    containerProps?: FormFieldProps
   }
 
 export const Switch = pure(
@@ -28,6 +31,7 @@ export const Switch = pure(
     margin,
     onBlur,
     onFocus,
+    containerProps,
     ...props
   }: SwitchProps) => (
     <FormField
@@ -39,6 +43,7 @@ export const Switch = pure(
       margin={margin}
       onBlur={onBlur}
       onFocus={onFocus}
+      {...containerProps}
     >
       {wrapWithLabel(
         label,

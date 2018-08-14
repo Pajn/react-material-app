@@ -19,6 +19,7 @@ export type TextFieldProps = Omit<
     id?: string
     startAdornment?: InputProps['startAdornment']
     endAdornment?: InputProps['endAdornment']
+    containerProps?: FormFieldProps
   }
 
 export const TextField = pure(
@@ -37,6 +38,7 @@ export const TextField = pure(
     margin,
     onBlur,
     onFocus,
+    containerProps,
     ...props
   }: TextFieldProps) => (
     <FormField
@@ -48,6 +50,7 @@ export const TextField = pure(
       margin={margin}
       onBlur={onBlur}
       onFocus={onFocus}
+      {...containerProps}
     >
       <MUITextField
         {...props}

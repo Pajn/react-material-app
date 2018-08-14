@@ -23,6 +23,7 @@ export const FormField = ({
   onBlur,
   onFocus,
   children,
+  ...props
 }: FormFieldProps) => (
   <FormControl
     disabled={disabled}
@@ -32,6 +33,7 @@ export const FormField = ({
     margin={margin}
     onBlur={onBlur}
     onFocus={onFocus}
+    {...props}
   >
     {children}
     {error && <FormHelperText>{error}</FormHelperText>}
