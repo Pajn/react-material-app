@@ -76,7 +76,7 @@ export class DelayedCircularProgress extends React.PureComponent<
     const {spin} = this.state
 
     return (
-      <Grow in={spin}>
+      <Grow in={spin} mountOnEnter unmountOnExit>
         <CircularProgress {...this.props} />
       </Grow>
     )
