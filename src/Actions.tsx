@@ -4,7 +4,6 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import glamorous from 'glamorous'
 import {History, Location} from 'history'
 import React, {ReactElement, ReactNode} from 'react'
 import {withRouter} from 'react-router'
@@ -55,8 +54,14 @@ export type PrivateActionsProps = ActionsProps & {
   history: History
 }
 
-const ActionRow = glamorous.div(
-  row({horizontal: 'flex-end', vertical: 'center'}),
+const ActionRow = (props: React.HTMLProps<HTMLDivElement>) => (
+  <div
+    {...props}
+    style={{
+      ...row({horizontal: 'flex-end', vertical: 'center'}),
+      ...props.style,
+    }}
+  />
 )
 
 const wrapWithTooltip = (

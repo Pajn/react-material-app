@@ -8,7 +8,6 @@ import {Theme} from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import BackIcon from '@material-ui/icons/ArrowBack'
 import MenuIcon from '@material-ui/icons/Menu'
-import glamorous from 'glamorous'
 import {History, Location} from 'history'
 import React, {ReactNode} from 'react'
 import {withRouter} from 'react-router'
@@ -19,8 +18,12 @@ import {LazyDrawer} from '../lazy'
 import {ScaffoldContext, Section, scaffoldContext} from './context'
 
 const drawerWidth = 240
-const Container = glamorous.div([row({flex: 1}), {position: 'relative'}])
-const ContentContainer = glamorous.div(column({flex: 1}))
+const Container = (props: React.HTMLProps<HTMLDivElement>) => (
+  <div {...props} style={{...row({flex: 1}), position: 'relative'}} />
+)
+const ContentContainer = (props: React.HTMLProps<HTMLDivElement>) => (
+  <div {...props} style={column({flex: 1})} />
+)
 const styles = (theme: Theme) => ({
   appBar: {
     position: 'static' as 'static',

@@ -13,7 +13,6 @@
     "@types/recompose": "^0.26.4",
     "@types/webpack-env": "^1.13.6",
     "deep-equal": "^1.0.1",
-    "glamorous": "^4.11.4",
     "history": "^4.7.2",
     "loadable-components": "^2.2.3",
     "material-definitions": "^0.3.3",
@@ -29,6 +28,7 @@
     "documittu-analyzer-ts": "^0.3.4",
     "documittu-template-default": "^0.3.5",
     "glamor": "^2.20.40",
+    "glamorous": "^4.13.1",
     "prettier": "^1.14.2",
     "promise-land": "^0.1.2",
     "react": "^16.4.2",
@@ -40,7 +40,6 @@
     "typescript": "^3.0.1"
   },
   "peerDependencies": {
-    "glamor": "^2.20.40",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2"
