@@ -1,6 +1,5 @@
 import {StyledComponentProps} from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
-import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -16,6 +15,7 @@ import {withRouter} from 'react-router'
 import {compose} from 'recompose'
 import {column, flex, row} from 'style-definitions'
 import {Action, Actions} from '../Actions'
+import {LazyDrawer} from '../lazy'
 import {ScaffoldContext, Section, scaffoldContext} from './context'
 
 const drawerWidth = 240
@@ -154,70 +154,70 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
 
     return (
       <scaffoldContext.Provider value={this.childContext}>
-      <Container>
-        {drawer && [
-          <Hidden mdUp key="mobile drawer">
-            <Drawer
-              variant="temporary"
-              open={this.state.drawerOpen}
-              onClose={this.handleDrawerToggle}
-              classes={{paper: classes!.drawerPaper}}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>,
-          <Hidden mdDown key="desktop drawer">
-            <Drawer
-              variant="permanent"
-              open
-              classes={{docked: classes!.docked, paper: classes!.drawerPaper}}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>,
-        ]}
-        <ContentContainer>
-          <AppBar className={classes!.appBar}>
-            <Toolbar>
-              {drawer &&
-                !showBack && (
+        <Container>
+          {drawer && [
+            <Hidden mdUp key="mobile drawer">
+              <LazyDrawer
+                variant="temporary"
+                open={this.state.drawerOpen}
+                onClose={this.handleDrawerToggle}
+                classes={{paper: classes!.drawerPaper}}
+              >
+                {drawer}
+              </LazyDrawer>
+            </Hidden>,
+            <Hidden mdDown key="desktop drawer">
+              <LazyDrawer
+                variant="permanent"
+                open
+                classes={{docked: classes!.docked, paper: classes!.drawerPaper}}
+              >
+                {drawer}
+              </LazyDrawer>
+            </Hidden>,
+          ]}
+          <ContentContainer>
+            <AppBar className={classes!.appBar}>
+              <Toolbar>
+                {drawer &&
+                  !showBack && (
+                    <IconButton
+                      aria-label="Open drawer"
+                      color="inherit"
+                      onClick={this.handleDrawerToggle}
+                      className={classes!.navIconHide}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  )}
+                {showBack && (
                   <IconButton
-                    aria-label="Open drawer"
+                    aria-label="Back"
                     color="inherit"
-                    onClick={this.handleDrawerToggle}
-                    className={classes!.navIconHide}
+                    onClick={
+                      activeSection.onBack
+                        ? () => activeSection.onBack!(this.props.history)
+                        : undefined
+                    }
                   >
-                    <MenuIcon />
+                    <BackIcon />
                   </IconButton>
                 )}
-              {showBack && (
-                <IconButton
-                  aria-label="Back"
-                  color="inherit"
-                  onClick={
-                    activeSection.onBack
-                      ? () => activeSection.onBack!(this.props.history)
-                      : undefined
-                  }
-                >
-                  <BackIcon />
-                </IconButton>
-              )}
-              <Typography variant="title" color="inherit" style={flex(true)}>
-                {activeSection ? activeSection.title : appName}
-              </Typography>
-              {contextActions && (
-                <Actions
-                  actions={contextActions}
-                  color="inherit"
-                  style={{marginRight: -8}}
-                />
-              )}
-            </Toolbar>
-          </AppBar>
-          <div style={{flex: 1}}>{children}</div>
-        </ContentContainer>
-      </Container>
+                <Typography variant="title" color="inherit" style={flex(true)}>
+                  {activeSection ? activeSection.title : appName}
+                </Typography>
+                {contextActions && (
+                  <Actions
+                    actions={contextActions}
+                    color="inherit"
+                    style={{marginRight: -8}}
+                  />
+                )}
+              </Toolbar>
+            </AppBar>
+            <div style={{flex: 1}}>{children}</div>
+          </ContentContainer>
+        </Container>
       </scaffoldContext.Provider>
     )
   }

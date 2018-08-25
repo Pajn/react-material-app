@@ -3,9 +3,6 @@ import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Tooltip, {TooltipProps} from '@material-ui/core/Tooltip'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import glamorous from 'glamorous'
 import {History, Location} from 'history'
@@ -15,6 +12,7 @@ import {Link} from 'react-router-dom'
 import {withMedia} from 'react-with-media'
 import {compose} from 'recompose'
 import {row} from 'style-definitions'
+import {LazyMenu, LazyMenuItem, LazyTooltip, TooltipProps} from './lazy'
 import {Omit} from './types'
 
 declare module '@material-ui/core/ButtonBase/ButtonBase' {
@@ -69,13 +67,17 @@ const wrapWithTooltip = (
   tooltip === undefined ? (
     children
   ) : typeof tooltip === 'string' ? (
-    <Tooltip key={children.key!} title={tooltip} placement={tooltipPlacement}>
+    <LazyTooltip
+      key={children.key!}
+      title={tooltip}
+      placement={tooltipPlacement}
+    >
       {children}
-    </Tooltip>
+    </LazyTooltip>
   ) : (
-    <Tooltip key={children.key!} placement={tooltipPlacement} {...tooltip}>
+    <LazyTooltip key={children.key!} placement={tooltipPlacement} {...tooltip}>
       {children}
-    </Tooltip>
+    </LazyTooltip>
   )
 
 const enhance = compose<PrivateActionsProps, ActionsProps>(
@@ -223,7 +225,7 @@ export class ActionsView extends React.Component<
           >
             <MoreVertIcon />
           </IconButton>,
-          <Menu
+          <LazyMenu
             key="menu"
             id="action-menu"
             open={this.state.open}
@@ -239,7 +241,7 @@ export class ActionsView extends React.Component<
             }}
           >
             {menuItems.map((item, i) => (
-              <MenuItem
+              <LazyMenuItem
                 key={item.label || i}
                 aria-label={item.ariaLabel}
                 component={item.to ? (Link as any) : undefined}
@@ -260,9 +262,9 @@ export class ActionsView extends React.Component<
                   </ListItemIcon>
                 )}{' '}
                 {item.label || ''}
-              </MenuItem>
+              </LazyMenuItem>
             ))}
-          </Menu>,
+          </LazyMenu>,
         ]}
       </ActionRow>
     )
