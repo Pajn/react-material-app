@@ -132,14 +132,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@16.0.6", "@types/react-dom@^16.0.3":
-  version "16.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.6.tgz#f1a65a4e7be8ed5d123f8b3b9eacc913e35a1a3c"
-  dependencies:
-    "@types/node" "*"
-    "@types/react" "*"
-
-"@types/react-dom@^16.0.7":
+"@types/react-dom@16.0.7", "@types/react-dom@^16.0.3", "@types/react-dom@^16.0.7":
   version "16.0.7"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.7.tgz#54d0f867a76b90597e8432030d297982f25c20ba"
   dependencies:
@@ -175,26 +168,14 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.4.6", "@types/react@^16.0.16", "@types/react@^16.0.40":
-  version "16.4.6"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
-  dependencies:
-    csstype "^2.2.0"
-
-"@types/react@^16.4.11":
+"@types/react@*", "@types/react@16.4.11", "@types/react@^16.0.40", "@types/react@^16.4.11":
   version "16.4.11"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.11.tgz#330f3d864300f71150dc2d125e48644c098f8770"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/recompose@0.26.1":
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/@types/recompose/-/recompose-0.26.1.tgz#a21c5728dea223551882b763335cb1bc641bf1d0"
-  dependencies:
-    "@types/react" "*"
-
-"@types/recompose@^0.26.4":
+"@types/recompose@0.26.4", "@types/recompose@^0.26.4":
   version "0.26.4"
   resolved "https://registry.yarnpkg.com/@types/recompose/-/recompose-0.26.4.tgz#93dd6c4e28857cd799e9a807a470f66a40c49c3f"
   dependencies:

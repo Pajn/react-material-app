@@ -1,9 +1,9 @@
 import deepEqual from 'deep-equal'
 // @ts-ignore
 import React from 'react'
-import {compose, getContext, lifecycle} from 'recompose'
+import {compose, lifecycle} from 'recompose'
 import {Action} from '../Actions'
-import {ScaffoldContext, scaffoldContextType} from './context'
+import {ScaffoldContext, withScaffoldContext} from './context'
 
 export type ContextActionsProps = {
   contextActions: Array<Action>
@@ -12,7 +12,7 @@ export type PrivateContextActionsProps = ContextActionsProps &
   ScaffoldContext & {}
 
 const enhance = compose<PrivateContextActionsProps, ContextActionsProps>(
-  getContext<ScaffoldContext>(scaffoldContextType),
+  withScaffoldContext,
   lifecycle<PrivateContextActionsProps, PrivateContextActionsProps>({
     componentDidMount() {
       const {contextActions, setContextActions} = this

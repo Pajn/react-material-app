@@ -1,5 +1,5 @@
 import {History} from 'history'
-import PropTypes, {ValidationMap} from 'prop-types'
+import React, {ComponentType, createContext} from 'react'
 import {Action} from '../Actions'
 
 export type Section = {
@@ -20,13 +20,14 @@ export type ScaffoldContext = {
   clearContextActions: () => void
 }
 
-export const scaffoldContextType: ValidationMap<ScaffoldContext> = {
-  activeSection: PropTypes.object,
+export const scaffoldContext = createContext<ScaffoldContext>(undefined as any)
 
-  pushSection: PropTypes.func,
-  popSection: PropTypes.func,
-  replaceSection: PropTypes.func,
-
-  setContextActions: PropTypes.func,
-  clearContextActions: PropTypes.func,
+export function withScaffoldContext<P>(
+  WrappedComponent: ComponentType<P & ScaffoldContext>,
+) {
+  return (props: P) => (
+    <scaffoldContext.Consumer>
+      {context => <WrappedComponent {...props} {...context} />}
+    </scaffoldContext.Consumer>
+  )
 }

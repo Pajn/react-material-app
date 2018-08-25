@@ -1,21 +1,21 @@
 import React from 'react'
 import {matchPath} from 'react-router'
-import {compose, getContext, lifecycle, withHandlers} from 'recompose'
+import {compose, lifecycle, withHandlers} from 'recompose'
 import {
   ScaffoldContext,
   Section as SectionType,
-  scaffoldContextType,
+  withScaffoldContext,
 } from './context'
 
 export type SectionProps = SectionType
 export type PrivateSectionProps = SectionProps &
   ScaffoldContext & {
-    children: React.ReactElement<any>
+    children: React.ReactElement<any> | null
     popstateListener: () => void
   }
 
 const enhance = compose<PrivateSectionProps, SectionProps>(
-  getContext(scaffoldContextType as any),
+  withScaffoldContext,
   withHandlers({
     popstateListener: ({
       path,
@@ -59,7 +59,7 @@ const enhance = compose<PrivateSectionProps, SectionProps>(
   }),
 )
 
-export const SectionView = ({children = null}: PrivateSectionProps) => children!
+export const SectionView = ({children = null}: PrivateSectionProps) => children
 
 /**
  * Sets the current page in the Appbar

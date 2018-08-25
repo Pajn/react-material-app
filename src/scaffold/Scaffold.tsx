@@ -16,7 +16,7 @@ import {withRouter} from 'react-router'
 import {compose} from 'recompose'
 import {column, flex, row} from 'style-definitions'
 import {Action, Actions} from '../Actions'
-import {ScaffoldContext, Section, scaffoldContextType} from './context'
+import {ScaffoldContext, Section, scaffoldContext} from './context'
 
 const drawerWidth = 240
 const Container = glamorous.div([row({flex: 1}), {position: 'relative'}])
@@ -59,11 +59,13 @@ export type State = {
   drawerOpen: boolean
 }
 
-const enhance = compose(withRouter, withStyles(styles, {withTheme: true}))
+const enhance = compose(
+  withRouter,
+  withStyles(styles, {withTheme: true}),
+)
 
 export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
-  static childContextTypes = scaffoldContextType
-  context: ScaffoldContext
+  childContext: ScaffoldContext
   state: State = {
     sections: [],
     drawerOpen: false,
@@ -75,6 +77,26 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
 
   get currentUrl() {
     return this.activeSection && this.activeSection.path
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.childContext = {
+      activeSection: this.activeSection,
+
+      pushSection: this.pushSection,
+      popSection: this.popSection,
+      replaceSection: this.replaceSection,
+
+      setContextActions: contextActions => {
+        this.setState({contextActions})
+      },
+      clearContextActions: () => {
+        if (this.state.contextActions)
+          this.setState({contextActions: undefined})
+      },
+    }
   }
 
   back = () => this.props.history.goBack()
@@ -122,24 +144,6 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
     this.setState({drawerOpen: !this.state.drawerOpen})
   }
 
-  getChildContext(): ScaffoldContext {
-    return {
-      activeSection: this.activeSection,
-
-      pushSection: this.pushSection,
-      popSection: this.popSection,
-      replaceSection: this.replaceSection,
-
-      setContextActions: contextActions => {
-        this.setState({contextActions})
-      },
-      clearContextActions: () => {
-        if (this.state.contextActions)
-          this.setState({contextActions: undefined})
-      },
-    }
-  }
-
   render() {
     const {appName, drawer, classes, children} = this.props
     const {contextActions, sections} = this.state
@@ -149,6 +153,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
       : activeSection
 
     return (
+      <scaffoldContext.Provider value={this.childContext}>
       <Container>
         {drawer && [
           <Hidden mdUp key="mobile drawer">
@@ -213,6 +218,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
           <div style={{flex: 1}}>{children}</div>
         </ContentContainer>
       </Container>
+      </scaffoldContext.Provider>
     )
   }
 }
