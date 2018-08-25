@@ -8189,13 +8189,12 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-with-media@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-0.4.2.tgz#3c502e5f17b33bddb1bf7d03df69d7144b5cd8f0"
+react-with-media@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-0.5.0.tgz#1c223d03de54cead56f0eb6c7ecd5bb35d259d9d"
   dependencies:
-    recompose "^0.26.0"
-  optionalDependencies:
-    "@types/react" "^16.0.16"
+    "@types/recompose" "^0.26.4"
+    recompose "^0.28.2"
 
 "react@^15 || ^16", react@^16.2.0:
   version "16.4.1"
