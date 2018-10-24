@@ -1,14 +1,16 @@
-import {InputProps} from '@material-ui/core/Input'
+import {FilledInputProps} from '@material-ui/core/FilledInput'
+import {InputProps as StandardInputProps} from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
+import {OutlinedInputProps} from '@material-ui/core/OutlinedInput'
 import MUITextField, {
-  TextFieldProps as MUITextFieldProps,
+  BaseTextFieldProps as MUITextFieldProps,
 } from '@material-ui/core/TextField'
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'
 import {FormField, FormFieldProps} from './helpers'
 
-export type TextFieldProps = Omit<
+export type BaseTextFieldProps = Omit<
   MUITextFieldProps,
   'value' | 'onChange' | 'error'
 > &
@@ -17,10 +19,33 @@ export type TextFieldProps = Omit<
     onChange?: (value: string) => void
     label?: ReactNode
     id?: string
-    startAdornment?: InputProps['startAdornment']
-    endAdornment?: InputProps['endAdornment']
+    startAdornment?: StandardInputProps['startAdornment']
+    endAdornment?: StandardInputProps['endAdornment']
     containerProps?: FormFieldProps
   }
+
+export interface StandardTextFieldProps extends BaseTextFieldProps {
+  variant?: 'standard'
+  InputProps?: Partial<StandardInputProps>
+  inputProps?: StandardInputProps['inputProps']
+}
+
+export interface FilledTextFieldProps extends BaseTextFieldProps {
+  variant: 'filled'
+  InputProps?: Partial<FilledInputProps>
+  inputProps?: FilledInputProps['inputProps']
+}
+
+export interface OutlinedTextFieldProps extends BaseTextFieldProps {
+  variant: 'outlined'
+  InputProps?: Partial<OutlinedInputProps>
+  inputProps?: OutlinedInputProps['inputProps']
+}
+
+export type TextFieldProps =
+  | StandardTextFieldProps
+  | FilledTextFieldProps
+  | OutlinedTextFieldProps
 
 export const TextField = pure(
   ({
@@ -39,6 +64,7 @@ export const TextField = pure(
     onBlur,
     onFocus,
     containerProps,
+    variant,
     ...props
   }: TextFieldProps) => (
     <FormField
@@ -57,6 +83,7 @@ export const TextField = pure(
         id={id}
         label={label}
         value={value}
+        variant={variant as any}
         onChange={onChange && (event => onChange(event.target.value))}
         disabled={disabled}
         InputProps={{
