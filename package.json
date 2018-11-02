@@ -2,7 +2,7 @@
   "name": "react-material-app",
   "description": "High level material design React components",
   "homepage": "https://pajn.github.io/react-material-app/",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
