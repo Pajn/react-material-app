@@ -20,6 +20,7 @@ export type SelectProps = Omit<MUISelectProps, 'value' | 'onChange' | 'error'> &
     id?: string
     choices: Array<Choice>
     containerProps?: FormFieldProps
+    renderChoice?: (choice: Choice, index: number) => ReactNode
   }
 
 export const Select = pure(
@@ -40,6 +41,7 @@ export const Select = pure(
     onFocus,
     choices,
     containerProps,
+    renderChoice,
     ...props
   }: SelectProps) => (
     <FormField
@@ -81,11 +83,13 @@ export const Select = pure(
           />
         }
       >
-        {choices.map((choice, i) => (
-          <MenuItem key={i} value={choice.value}>
-            {choice.label}
-          </MenuItem>
-        ))}
+        {renderChoice === undefined
+          ? choices.map((choice, i) => (
+              <MenuItem key={i} value={choice.value}>
+                {choice.label}
+              </MenuItem>
+            ))
+          : choices.map(renderChoice)}
       </MUISelect>
     </FormField>
   ),
