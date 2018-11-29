@@ -1,20 +1,29 @@
-import {History} from 'history'
 import React, {ComponentType, createContext} from 'react'
 import {Action} from '../Actions'
 
 export type Section = {
-  path?: string
+  backTo?: string
   title: string
-  onBack?: (history: History) => void
+  appBar?:
+    | false
+    | {
+        position?: 'fixed' | 'absolute' | 'sticky' | 'static' | 'relative'
+        elevated?: boolean
+      }
   onUnload?: () => void
 }
 
 export type ScaffoldContext = {
   activeSection?: Section
+  activeAppBar:
+    | false
+    | {
+        position: 'fixed' | 'absolute' | 'sticky' | 'static' | 'relative'
+        elevated: boolean
+      }
 
-  pushSection: (section: Section) => void
-  popSection: (title: string) => void
-  replaceSection: (newSection: Section, oldTitle?: string) => void
+  setSection: (section: Section) => void
+  removeSection: (section: Section) => void
 
   setContextActions: (actions: Array<Action>) => void
   clearContextActions: () => void

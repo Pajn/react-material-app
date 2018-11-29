@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import {History, Location} from 'history'
 import React, {ReactNode} from 'react'
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom'
 import {compose} from 'recompose'
 import {column, flex, row} from 'style-definitions'
 import {Action, Actions} from '../Actions'
@@ -25,9 +26,6 @@ const ContentContainer = (props: React.HTMLProps<HTMLDivElement>) => (
   <div {...props} style={column({flex: 1})} />
 )
 const styles = (theme: Theme) => ({
-  appBar: {
-    position: 'static' as 'static',
-  },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
       display: 'none' as 'none',
@@ -49,7 +47,14 @@ const styles = (theme: Theme) => ({
 
 export type ScaffoldProps = {
   appName: string
+  appBar?:
+    | false
+    | {
+        position?: 'fixed' | 'absolute' | 'sticky' | 'static' | 'relative'
+        elevated?: boolean
+      }
   drawer?: ReactNode
+  basePath?: string
 }
 export type PrivateScaffoldProps = ScaffoldProps &
   StyledComponentProps<'docked' | 'drawerPaper' | 'navIconHide' | 'appBar'> & {
@@ -73,24 +78,45 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
     sections: [],
     drawerOpen: false,
   }
+  historyIndex = 0
 
-  get activeSection() {
+  get activeSection(): Section | undefined {
     return this.state.sections[0]
   }
 
-  get currentUrl() {
-    return this.activeSection && this.activeSection.path
+  get activeAppBar():
+    | false
+    | {
+        position: 'fixed' | 'absolute' | 'sticky' | 'static' | 'relative'
+        elevated: boolean
+      } {
+    const activeSection = this.activeSection || {appBar: undefined}
+    if (activeSection.appBar === false) return false
+    if (activeSection.appBar === undefined && this.props.appBar === false)
+      return false
+
+    const {position: propsPosition = 'static', elevated: propsElevated = true} =
+      this.props.appBar || {}
+    const {
+      position: sectionPosition = propsPosition,
+      elevated: sectionElevated = propsElevated,
+    } = activeSection.appBar || {}
+
+    return {position: sectionPosition, elevated: sectionElevated}
   }
 
   constructor(props) {
     super(props)
+    this.updateContext()
+  }
 
+  updateContext = () => {
     this.childContext = {
       activeSection: this.activeSection,
+      activeAppBar: this.activeAppBar,
 
-      pushSection: this.pushSection,
-      popSection: this.popSection,
-      replaceSection: this.replaceSection,
+      setSection: this.setSection,
+      removeSection: this.removeSection,
 
       setContextActions: contextActions => {
         this.setState({contextActions})
@@ -100,47 +126,19 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
           this.setState({contextActions: undefined})
       },
     }
-  }
-
-  back = () => this.props.history.goBack()
-
-  pushSection = (section: Section) => {
-    // Set state synchronously to not drop multiple changes in the same render
-    this.state.sections = [section, ...this.state.sections]
     this.setState({})
   }
-  popSection = (title?: string) => {
-    if (
-      title === undefined ||
-      (this.state.sections[0] && this.state.sections[0].title === title)
-    ) {
-      // Set state synchronously to not drop multiple changes in the same render
-      const [poppedSection, ...keptSections] = this.state.sections
-      this.state.sections = keptSections
-      this.setState({})
-      if (poppedSection.onUnload) {
-        poppedSection.onUnload()
-      }
-    }
-  }
-  replaceSection = (newSection: Section, oldTitle?: string) => {
-    const index = oldTitle
-      ? this.state.sections.findIndex(section => section.title === oldTitle)
-      : 0
 
-    if (index >= 0) {
-      const replacedSections = this.state.sections[index]
-      this.setState({
-        sections: [
-          ...this.state.sections.slice(0, index),
-          newSection,
-          ...this.state.sections.slice(index + 1),
-        ],
-      })
-      if (replacedSections.onUnload) {
-        replacedSections.onUnload()
-      }
-    }
+  setSection = (section: Section) => {
+    this.state.sections.unshift(section)
+    this.updateContext()
+  }
+
+  removeSection = (section: Section) => {
+    this.state.sections = this.state.sections.filter(
+      s => s.title !== section.title,
+    )
+    this.updateContext()
   }
 
   handleDrawerToggle = () => {
@@ -149,11 +147,11 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
 
   render() {
     const {appName, drawer, classes, children} = this.props
-    const {contextActions, sections} = this.state
+    const {contextActions} = this.state
     const activeSection = this.activeSection
-    const showBack = drawer
-      ? activeSection && sections.length > 1
-      : activeSection
+    const backTo = activeSection && activeSection.backTo
+
+    const appBar = this.activeAppBar
 
     return (
       <scaffoldContext.Provider value={this.childContext}>
@@ -180,44 +178,47 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
             </Hidden>,
           ]}
           <ContentContainer>
-            <AppBar className={classes!.appBar}>
-              <Toolbar>
-                {drawer &&
-                  !showBack && (
-                    <IconButton
-                      aria-label="Open drawer"
-                      color="inherit"
-                      onClick={this.handleDrawerToggle}
-                      className={classes!.navIconHide}
-                    >
-                      <MenuIcon />
-                    </IconButton>
+            {appBar && (
+              <AppBar
+                position={appBar.position}
+                elevation={appBar.elevated ? 4 : 0}
+              >
+                <Toolbar>
+                  {drawer &&
+                    !backTo && (
+                      <IconButton
+                        aria-label="Open drawer"
+                        color="inherit"
+                        onClick={this.handleDrawerToggle}
+                        className={classes!.navIconHide}
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    )}
+                  {backTo && (
+                    <Link to={backTo} replace style={{color: 'inherit'}}>
+                      <IconButton aria-label="Back" color="inherit">
+                        <BackIcon />
+                      </IconButton>
+                    </Link>
                   )}
-                {showBack && (
-                  <IconButton
-                    aria-label="Back"
+                  <Typography
+                    variant="title"
                     color="inherit"
-                    onClick={
-                      activeSection.onBack
-                        ? () => activeSection.onBack!(this.props.history)
-                        : undefined
-                    }
+                    style={flex(true)}
                   >
-                    <BackIcon />
-                  </IconButton>
-                )}
-                <Typography variant="title" color="inherit" style={flex(true)}>
-                  {activeSection ? activeSection.title : appName}
-                </Typography>
-                {contextActions && (
-                  <Actions
-                    actions={contextActions}
-                    color="inherit"
-                    style={{marginRight: -8}}
-                  />
-                )}
-              </Toolbar>
-            </AppBar>
+                    {activeSection ? activeSection.title : appName}
+                  </Typography>
+                  {contextActions && (
+                    <Actions
+                      actions={contextActions}
+                      color="inherit"
+                      style={{marginRight: -8}}
+                    />
+                  )}
+                </Toolbar>
+              </AppBar>
+            )}
             <div style={{flex: 1}}>{children}</div>
           </ContentContainer>
         </Container>

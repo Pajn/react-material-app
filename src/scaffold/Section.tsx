@@ -1,6 +1,5 @@
 import React from 'react'
-import {matchPath} from 'react-router'
-import {compose, lifecycle, withHandlers} from 'recompose'
+import {compose, lifecycle} from 'recompose'
 import {
   ScaffoldContext,
   Section as SectionType,
@@ -11,50 +10,29 @@ export type SectionProps = SectionType
 export type PrivateSectionProps = SectionProps &
   ScaffoldContext & {
     children: React.ReactElement<any> | null
-    popstateListener: () => void
   }
 
 const enhance = compose<PrivateSectionProps, SectionProps>(
   withScaffoldContext,
-  withHandlers({
-    popstateListener: ({
-      path,
-      popSection,
-      title,
-    }: PrivateSectionProps) => () => {
-      if (!matchPath(window.location.pathname, {path})) {
-        popSection(title)
-      }
-    },
-  }),
   lifecycle<PrivateSectionProps, PrivateSectionProps>({
     componentDidMount() {
-      const {
-        title,
-        path,
-        onBack,
-        onUnload,
-        pushSection,
-        popstateListener,
-      } = this.props as PrivateSectionProps
-      pushSection({title, path, onBack, onUnload})
-      if (path) {
-        window.addEventListener('popstate', popstateListener, true)
-      }
+      const {title, backTo, appBar, onUnload, setSection} = this.props
+      setSection({title, backTo, appBar, onUnload})
     },
-    componentWillReceiveProps(nextProps: PrivateSectionProps) {
-      const {title, onBack, path} = nextProps as PrivateSectionProps
-      if (title !== this.props.title || path !== this.props.path) {
-        nextProps.replaceSection({title, onBack, path}, this.props.title)
+    componentDidUpdate(nextProps) {
+      const {title, backTo, appBar, onUnload, setSection} = nextProps
+      if (
+        nextProps.title !== this.props.title ||
+        nextProps.backTo !== this.props.backTo ||
+        nextProps.onUnload !== this.props.onUnload ||
+        !nextProps.activeSection
+      ) {
+        setSection({title, backTo, appBar, onUnload})
       }
     },
     componentWillUnmount() {
-      const {title, path, popSection, popstateListener} = this
-        .props as PrivateSectionProps
-      popSection(title)
-      if (path) {
-        window.removeEventListener('popstate', popstateListener, true)
-      }
+      const {title, backTo, appBar, onUnload, removeSection} = this.props
+      removeSection({title, backTo, appBar, onUnload})
     },
   }),
 )
