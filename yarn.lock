@@ -1410,6 +1410,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.2.0.tgz#b03e42eeddf5898e00646e4c840fa07ba8dcad7f"
+  integrity sha512-oouEibCbHMVdZSDlJBO6bZmID/zA/G/Qx3H1d3rSNPTD+L8UNKvCat7aKWSJ74zYbm5zWGh0GQN0hKj8zYFTCg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -1705,7 +1712,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.7.7", "@types/react@^16.0.16", "@types/react@^16.0.40", "@types/react@^16.7.7":
+"@types/react@*", "@types/react@16.7.7", "@types/react@^16.0.40", "@types/react@^16.7.7", "@types/react@^16.7.8":
   version "16.7.7"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.7.tgz#1e5e23e7dd922968ed4b484cdec00a5402c9f31b"
   integrity sha512-dJiq7CKxD1XJ/GqmbnsQisFnzG4z5lntKBw9X9qeSrguxFbrrhGa8cK9s0ONBp8wL1EfGfofEDVhjen26U46pw==
@@ -12544,26 +12551,17 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-with-media@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-0.6.0.tgz#b9c2145e5b8e33e06a460a135d851310dc4b7f92"
-  integrity sha512-Kl2TiGym/s/ITN9RMuwNX9YW40vnpNS8h9qTlgUVUX+AoBsrUJMECI4uQTSBId9btdkiqiyOh+cS5e1Uc+0leg==
+react-with-media@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-1.0.2.tgz#0876628b2ccdc981ca9c219b076ae47e62ce9fca"
+  integrity sha512-X1jHdqq1UcmUyjyejxLsSm6VO/nvjWZ7yjAySx3giQ4dwTtM0LR7a3KGeIAbqV4pcfIBZZcv8YEIw74VEPPW7Q==
   dependencies:
-    recompose "^0.26.0"
+    "@babel/runtime" "^7.2.0"
+    recompose "^0.30.0"
   optionalDependencies:
-    "@types/react" "^16.0.16"
+    "@types/react" "^16.7.8"
 
-"react@^15 || ^16", react@^16.2.0:
-  version "16.4.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
-  integrity sha512-3GEs0giKp6E0Oh/Y9ZC60CmYgUPnp7voH9fbjWsvXtYFb4EWtgQub0ADSq0sJR0BbHc4FThLLtzlcFaFXIorwg==
-  dependencies:
-    fbjs "^0.8.16"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
-
-react@^16.6.0:
+"react@^15 || ^16", react@^16.2.0, react@^16.6.0:
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.6.0.tgz#b34761cfaf3e30f5508bc732fb4736730b7da246"
   integrity sha512-zJPnx/jKtuOEXCbQ9BKaxDMxR0001/hzxXwYxG8septeyYGfsgAei6NgfbVgOhbY1WOP2o3VPs/E9HaN+9hV3Q==
@@ -12664,7 +12662,7 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-"recompose@0.28.0 - 0.30.0":
+"recompose@0.28.0 - 0.30.0", recompose@^0.30.0:
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.30.0.tgz#82773641b3927e8c7d24a0d87d65aeeba18aabd0"
   integrity sha512-ZTrzzUDa9AqUIhRk4KmVFihH0rapdCSMFXjhHbNrjAWxBuUD/guYlyysMnuHjlZC/KRiOKRtB4jf96yYSkKE8w==
