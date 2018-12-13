@@ -1609,6 +1609,20 @@
     "@svgr/core" "^2.4.1"
     loader-utils "^1.1.0"
 
+"@types/events@*":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
+  integrity sha512-KEIlhXnIutzKwRbQkGWb/I4HFqBuUykAdHgDED6xqwXJfONCjF5VoE0cXEiurh3XauygxzeDzgtXUqvLkxFzzA==
+
+"@types/glob@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
+  integrity sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
+  dependencies:
+    "@types/events" "*"
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
 "@types/history@*":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
@@ -1634,6 +1648,11 @@
   dependencies:
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
+
+"@types/minimatch@*":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
+  integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
   version "10.5.1"
@@ -5409,6 +5428,15 @@ documittu-analyzer-ts@^0.3.4:
   resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.3.4.tgz#ff690d84d8bd1839c931ce4aa0e74161510ad3b2"
   integrity sha1-/2kNhNi9GDnJMc5KoOdBYVEK07I=
   dependencies:
+    "@types/node" "^8.5.5"
+    glob "^7.1.2"
+
+documittu-analyzer-ts@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/documittu-analyzer-ts/-/documittu-analyzer-ts-0.4.1.tgz#2a77db27129a802a85145f8fa757ecf44728a360"
+  integrity sha512-tksg3zEH0RmHgqoTmjTRh1hJbZyU+e5b07JMNvO0kkG0pVN157K7c/1Nm47rNlQ+daQe/mAOT9BftGDnjMV9tg==
+  dependencies:
+    "@types/glob" "^7.1.1"
     "@types/node" "^8.5.5"
     glob "^7.1.2"
 
