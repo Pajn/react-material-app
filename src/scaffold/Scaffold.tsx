@@ -15,8 +15,13 @@ import {Link} from 'react-router-dom'
 import {compose} from 'recompose'
 import {column, flex, row} from 'style-definitions'
 import {Action, Actions} from '../Actions'
-import {LazyDrawer} from '../lazy'
-import {ScaffoldContext, Section, scaffoldContext} from './context'
+import {LazyDrawer, LazySnackbar, SnackbarProps} from '../lazy'
+import {
+  Notification,
+  ScaffoldContext,
+  Section,
+  scaffoldContext,
+} from './context'
 
 const drawerWidth = 240
 const Container = (props: React.HTMLProps<HTMLDivElement>) => (
@@ -55,6 +60,18 @@ export type ScaffoldProps = {
       }
   drawer?: ReactNode
   basePath?: string
+  snackbar?: {
+    anchorOrigin: SnackbarProps['anchorOrigin']
+    autoHideDuration: SnackbarProps['autoHideDuration']
+    onClose: SnackbarProps['onClose']
+    onMouseEnter: SnackbarProps['onMouseEnter']
+    onMouseLeave: SnackbarProps['onMouseLeave']
+    ClickAwayListenerProps: SnackbarProps['ClickAwayListenerProps']
+    disableWindowBlurListener: SnackbarProps['disableWindowBlurListener']
+    TransitionComponent: SnackbarProps['TransitionComponent']
+    transitionDuration: SnackbarProps['transitionDuration']
+    TransitionProps: SnackbarProps['TransitionProps']
+  }
 }
 export type PrivateScaffoldProps = ScaffoldProps &
   StyledComponentProps<'docked' | 'drawerPaper' | 'navIconHide' | 'appBar'> & {
@@ -63,8 +80,10 @@ export type PrivateScaffoldProps = ScaffoldProps &
   }
 export type State = {
   sections: Array<Section>
+  notifications: Array<Notification>
   contextActions?: Array<Action>
   drawerOpen: boolean
+  loadSnackbar: boolean
 }
 
 const enhance = compose(
@@ -76,7 +95,9 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
   childContext: ScaffoldContext
   state: State = {
     sections: [],
+    notifications: [],
     drawerOpen: false,
+    loadSnackbar: false,
   }
   historyIndex = 0
 
@@ -125,8 +146,22 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
         if (this.state.contextActions)
           this.setState({contextActions: undefined})
       },
+
+      notify: notification =>
+        this.setState(state => ({
+          notifications: state.notifications.concat(notification),
+          loadSnackbar: true,
+        })),
     }
     this.setState({})
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      if (!this.state.loadSnackbar) {
+        this.setState({loadSnackbar: true})
+      }
+    }, 3000)
   }
 
   setSection = (section: Section) => {
@@ -147,7 +182,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
 
   render() {
     const {appName, drawer, classes, children} = this.props
-    const {contextActions} = this.state
+    const {contextActions, notifications, loadSnackbar} = this.state
     const activeSection = this.activeSection
     const backTo = activeSection && activeSection.backTo
 
@@ -184,17 +219,16 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
                 elevation={appBar.elevated ? 4 : 0}
               >
                 <Toolbar>
-                  {drawer &&
-                    !backTo && (
-                      <IconButton
-                        aria-label="Open drawer"
-                        color="inherit"
-                        onClick={this.handleDrawerToggle}
-                        className={classes!.navIconHide}
-                      >
-                        <MenuIcon />
-                      </IconButton>
-                    )}
+                  {drawer && !backTo && (
+                    <IconButton
+                      aria-label="Open drawer"
+                      color="inherit"
+                      onClick={this.handleDrawerToggle}
+                      className={classes!.navIconHide}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  )}
                   {backTo && (
                     <Link to={backTo} replace style={{color: 'inherit'}}>
                       <IconButton aria-label="Back" color="inherit">
@@ -220,6 +254,21 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
               </AppBar>
             )}
             <div style={{flex: 1}}>{children}</div>
+            {loadSnackbar && (
+              <LazySnackbar
+                open={notifications.length > 0}
+                {...this.props.snackbar}
+                {...notifications[0]}
+                onClose={(e, r) => {
+                  this.setState(state => ({
+                    notifications: state.notifications.slice(1),
+                  }))
+                  if (notifications[0].onClose) {
+                    notifications[0].onClose(e, r)
+                  }
+                }}
+              />
+            )}
           </ContentContainer>
         </Container>
       </scaffoldContext.Provider>

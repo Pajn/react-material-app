@@ -1,5 +1,6 @@
-import React, {ComponentType, createContext} from 'react'
+import React, {ComponentType, createContext, useContext} from 'react'
 import {Action} from '../Actions'
+import {SnackbarProps} from '../lazy'
 
 export type Section = {
   backTo?: string
@@ -12,6 +13,11 @@ export type Section = {
       }
   onUnload?: () => void
 }
+
+export type Notification = Pick<
+  SnackbarProps,
+  'action' | 'autoHideDuration' | 'message' | 'onClose' | 'resumeHideDuration'
+>
 
 export type ScaffoldContext = {
   activeSection?: Section
@@ -27,6 +33,8 @@ export type ScaffoldContext = {
 
   setContextActions: (actions: Array<Action>) => void
   clearContextActions: () => void
+
+  notify: (notification: Notification) => void
 }
 
 export const scaffoldContext = createContext<ScaffoldContext>(undefined as any)
@@ -39,4 +47,10 @@ export function withScaffoldContext<P>(
       {context => <WrappedComponent {...props} {...context} />}
     </scaffoldContext.Consumer>
   )
+}
+
+export const useNotify = () => {
+  const context = useContext(scaffoldContext)
+
+  return context.notify
 }

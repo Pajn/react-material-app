@@ -2,10 +2,11 @@ import withTheme, {WithTheme} from '@material-ui/core/styles/withTheme'
 import {CSSProperties} from 'jss/css'
 import React, {ReactChild} from 'react'
 import {WithMedia} from 'react-with-media'
-import {scaffoldContext} from './context'
+import {ScaffoldContext, scaffoldContext} from './context'
 
 export type ScaffoldInfo = {
   appBarHeight: number
+  notify: ScaffoldContext['notify']
 }
 
 export const ScaffoldAware = withTheme()(
@@ -31,18 +32,20 @@ export const ScaffoldAware = withTheme()(
                               appBarHeight: (theme.mixins.toolbar[
                                 mediaQuery
                               ] as CSSProperties).minHeight as number,
+                              notify: context.notify,
                             })
                           : inner ||
                             children({
                               appBarHeight: theme.mixins.toolbar
                                 .minHeight as number,
+                              notify: context.notify,
                             })
                       }
                     </WithMedia>
                   ),
                   undefined,
                 ) as React.ReactElement<any>)
-            : children({appBarHeight: 0})
+            : children({appBarHeight: 0, notify: context.notify})
           : null
       }
     </scaffoldContext.Consumer>
