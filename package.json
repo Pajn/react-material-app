@@ -23,7 +23,7 @@
     "style-definitions": "^0.1.7"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.7",
+    "@types/jest": "^24.0.6",
     "@types/react-router-dom": "^4.3.1",
     "documittu": "^0.3.5",
     "documittu-analyzer-ts": "^0.3.4",
