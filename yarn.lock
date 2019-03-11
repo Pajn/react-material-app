@@ -1396,17 +1396,17 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@7.1.2", "@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2":
+"@babel/runtime@7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
   integrity sha512-Y3SCjmhSupzFB6wcv1KmmFucH6gDVnI30WjOcicV10ju0cZjak3Jcs67YLIXBrmZYw1xCrVeJPbycFwrqNyxpg==
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0-beta.42":
-  version "7.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-rc.2.tgz#63082909bd27c39f92c27c641f278389ad30a478"
-  integrity sha512-QugZtHk0uVHqHmgwNn2f2uOtTwXWPBBZVSH2EFRm9iw1fFmi5fm46ye6NSVSiXT9Ymejh7fKIw3riCv23SNtSQ==
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.0.0-beta.42", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.4.tgz#73d12ba819e365fcf7fd152aed56d6df97d21c83"
+  integrity sha512-IvfvnMdSaLBateu0jfsYIpZTxAc2cKEXEMiezGGN75QcBcecDUKd3PgLAncT0oOgxKy8dd8hrJKj9MfzgfZd6g==
   dependencies:
     regenerator-runtime "^0.12.0"
 
@@ -1705,7 +1705,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.7.7", "@types/react@^16.0.16", "@types/react@^16.0.40", "@types/react@^16.7.7":
+"@types/react@*", "@types/react@16.7.7", "@types/react@^16.0.40", "@types/react@^16.7.7", "@types/react@^16.7.8":
   version "16.7.7"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.7.tgz#1e5e23e7dd922968ed4b484cdec00a5402c9f31b"
   integrity sha512-dJiq7CKxD1XJ/GqmbnsQisFnzG4z5lntKBw9X9qeSrguxFbrrhGa8cK9s0ONBp8wL1EfGfofEDVhjen26U46pw==
@@ -12544,14 +12544,15 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-with-media@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-0.6.0.tgz#b9c2145e5b8e33e06a460a135d851310dc4b7f92"
-  integrity sha512-Kl2TiGym/s/ITN9RMuwNX9YW40vnpNS8h9qTlgUVUX+AoBsrUJMECI4uQTSBId9btdkiqiyOh+cS5e1Uc+0leg==
+react-with-media@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-with-media/-/react-with-media-1.1.2.tgz#195b65496429fff353aafcb282a59033792a6a6c"
+  integrity sha512-Tngl3mHwet9Fnt6+iV2RFqmknM4gkLCOYSEiUCHQ59nbtfcYRef3A2cxIYHg1qHdoPwxuFPTi80IUD2YxeS18A==
   dependencies:
-    recompose "^0.26.0"
+    "@babel/runtime" "^7.2.0"
+    recompose "^0.30.0"
   optionalDependencies:
-    "@types/react" "^16.0.16"
+    "@types/react" "^16.7.8"
 
 "react@^15 || ^16", react@^16.2.0:
   version "16.4.1"
@@ -12664,7 +12665,7 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-"recompose@0.28.0 - 0.30.0":
+"recompose@0.28.0 - 0.30.0", recompose@^0.30.0:
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.30.0.tgz#82773641b3927e8c7d24a0d87d65aeeba18aabd0"
   integrity sha512-ZTrzzUDa9AqUIhRk4KmVFihH0rapdCSMFXjhHbNrjAWxBuUD/guYlyysMnuHjlZC/KRiOKRtB4jf96yYSkKE8w==
