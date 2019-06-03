@@ -14,12 +14,6 @@ import {row} from 'style-definitions'
 import {LazyMenu, LazyMenuItem, LazyTooltip, TooltipProps} from './lazy'
 import {Omit} from './types'
 
-declare module '@material-ui/core/ButtonBase/ButtonBase' {
-  interface ButtonBaseProps {
-    to?: string
-  }
-}
-
 export type Placement = 'menu' | 'toolbar' | 'auto'
 
 export type Action = {
@@ -174,50 +168,49 @@ export class ActionsView extends React.Component<
 
     return (
       <ActionRow style={style}>
-        {icons.map(
-          (item, i) =>
-            item.icon && !item.label ? (
-              wrapWithTooltip(
-                item.tooltip,
-                tooltipPlacement,
-                <IconButton
-                  key={item.label || i}
-                  component={item.to ? (Link as any) : undefined}
-                  aria-label={item.ariaLabel}
-                  onClick={item.onClick}
-                  disabled={item.disabled}
-                  type={item.type}
-                  form={item.form}
-                  href={item.href}
-                  to={item.to}
-                  color={color}
-                >
-                  <Icon children={item.icon} />
-                </IconButton>,
-              )
-            ) : (
-              <Button
+        {icons.map((item, i) =>
+          item.icon && !item.label ? (
+            wrapWithTooltip(
+              item.tooltip,
+              tooltipPlacement,
+              <IconButton
                 key={item.label || i}
                 component={item.to ? (Link as any) : undefined}
+                aria-label={item.ariaLabel}
                 onClick={item.onClick}
                 disabled={item.disabled}
                 type={item.type}
                 form={item.form}
                 href={item.href}
                 to={item.to}
-                style={{minWidth: 0}}
                 color={color}
-                size={isMouse ? 'small' : 'medium'}
-                aria-label={item.ariaLabel}
               >
-                {item.icon && (
-                  <ListItemIcon style={{marginRight: 8}}>
-                    <Icon children={item.icon} />
-                  </ListItemIcon>
-                )}
-                {item.label}
-              </Button>
-            ),
+                <Icon children={item.icon} />
+              </IconButton>,
+            )
+          ) : (
+            <Button
+              key={item.label || i}
+              component={item.to ? (Link as any) : undefined}
+              onClick={item.onClick}
+              disabled={item.disabled}
+              type={item.type}
+              form={item.form}
+              href={item.href}
+              to={item.to}
+              style={{minWidth: 0}}
+              color={color}
+              size={isMouse ? 'small' : 'medium'}
+              aria-label={item.ariaLabel}
+            >
+              {item.icon && (
+                <ListItemIcon style={{marginRight: 8}}>
+                  <Icon children={item.icon} />
+                </ListItemIcon>
+              )}
+              {item.label}
+            </Button>
+          ),
         )}
         {menuItems.length > 0 && [
           <IconButton

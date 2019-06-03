@@ -86,7 +86,7 @@ export class DelayedCircularProgress extends React.PureComponent<
 export type ProgressButtonProps = Omit<ButtonProps, 'onClick'> & {
   loading?: boolean
   timeout?: number
-  progressProps?: CircularProgressProps
+  progressProps?: Omit<CircularProgressProps, 'ref'>
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => any
   /**
    * @default true

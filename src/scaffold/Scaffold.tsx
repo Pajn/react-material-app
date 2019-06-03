@@ -236,11 +236,7 @@ export class ScaffoldView extends React.Component<PrivateScaffoldProps, State> {
                       </IconButton>
                     </Link>
                   )}
-                  <Typography
-                    variant="title"
-                    color="inherit"
-                    style={flex(true)}
-                  >
+                  <Typography variant="h6" color="inherit" style={flex(true)}>
                     {activeSection ? activeSection.title : appName}
                   </Typography>
                   {contextActions && (

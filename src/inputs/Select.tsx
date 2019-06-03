@@ -63,7 +63,7 @@ export const Select = pure(
       <MUISelect
         {...props}
         value={value}
-        onChange={onChange && (event => onChange(event.target.value))}
+        onChange={onChange && (event => onChange(event.target.value as string))}
         input={
           <Input
             id={id}

@@ -1,5 +1,5 @@
+import {CSSProperties} from '@material-ui/core/styles/withStyles'
 import withTheme, {WithTheme} from '@material-ui/core/styles/withTheme'
-import {CSSProperties} from 'jss/css'
 import React, {ReactChild} from 'react'
 import {WithMedia} from 'react-with-media'
 import {ScaffoldContext, scaffoldContext} from './context'
@@ -9,7 +9,7 @@ export type ScaffoldInfo = {
   notify: ScaffoldContext['notify']
 }
 
-export const ScaffoldAware = withTheme()(
+export const ScaffoldAware = withTheme(
   ({
     theme,
     children,

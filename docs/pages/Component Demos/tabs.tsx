@@ -10,7 +10,7 @@ export const attributes = {
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{padding: 8 * 3}}>
+    <Typography varaint='body2' component="div" style={{padding: 8 * 3}}>
       {props.children}
     </Typography>
   )
