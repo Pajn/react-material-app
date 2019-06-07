@@ -204,7 +204,7 @@ export class ActionsView extends React.Component<
               aria-label={item.ariaLabel}
             >
               {item.icon && (
-                <ListItemIcon style={{marginRight: 8}}>
+                <ListItemIcon style={{marginRight: 8, minWidth: 24}}>
                   <Icon children={item.icon} />
                 </ListItemIcon>
               )}
