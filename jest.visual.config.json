@@ -1,0 +1,6 @@
+{
+  "preset": "jest-puppeteer",
+  "rootDir": ".",
+  "testMatch": ["<rootDir>/src/**/?(*.)visual.{js,jsx,ts,tsx}"],
+  "setupFilesAfterEnv": ["<rootDir>/setupVisualTests.js"]
+}
