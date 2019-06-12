@@ -4,7 +4,12 @@ import MUISwitch, {
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'
-import {FormField, FormFieldProps, wrapWithLabel} from './helpers'
+import {
+  FormControlLabelProps,
+  FormField,
+  FormFieldProps,
+  wrapWithLabel,
+} from './helpers'
 
 export type SwitchProps = Omit<
   MUISwitchProps,
@@ -16,6 +21,7 @@ export type SwitchProps = Omit<
     label?: ReactNode
     id?: string
     containerProps?: FormFieldProps
+    FormControlLabelProps?: FormControlLabelProps
   }
 
 export const Switch = pure(
@@ -32,6 +38,7 @@ export const Switch = pure(
     onBlur,
     onFocus,
     containerProps,
+    FormControlLabelProps,
     ...props
   }: SwitchProps) => (
     <FormField
@@ -53,6 +60,7 @@ export const Switch = pure(
           onChange={onChange && ((_, checked) => onChange(checked))}
           disabled={disabled}
         />,
+        FormControlLabelProps,
       )}
     </FormField>
   ),

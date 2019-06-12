@@ -4,7 +4,12 @@ import MUICheckbox, {
 import React, {ReactNode} from 'react'
 import {pure} from 'recompose'
 import {Omit} from '../types'
-import {FormField, FormFieldProps, wrapWithLabel} from './helpers'
+import {
+  FormControlLabelProps,
+  FormField,
+  FormFieldProps,
+  wrapWithLabel,
+} from './helpers'
 
 export type CheckboxProps = Omit<
   MUICheckboxProps,
@@ -16,6 +21,7 @@ export type CheckboxProps = Omit<
     label?: ReactNode
     id?: string
     containerProps?: FormFieldProps
+    FormControlLabelProps?: FormControlLabelProps
   }
 
 export const Checkbox = pure(
@@ -32,6 +38,7 @@ export const Checkbox = pure(
     onBlur,
     onFocus,
     containerProps,
+    FormControlLabelProps,
     ...props
   }: CheckboxProps) => (
     <FormField
@@ -53,6 +60,7 @@ export const Checkbox = pure(
           onChange={onChange && ((_, checked) => onChange(checked))}
           disabled={disabled}
         />,
+        FormControlLabelProps,
       )}
     </FormField>
   ),
